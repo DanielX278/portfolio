@@ -1,0 +1,506 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #f5f5f5;
+    padding: 40px;
+    padding-top: 100px; /* Added padding to account for fixed header */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Section */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    z-index: 1000;
+    pointer-events: none; /* Allow events to pass through the transparent header */
+}
+
+.site-header .logo, .site-header .name-tag {
+    pointer-events: auto;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .site-header {
+        background-color: #f5f5f5;
+        z-index: 25;
+        pointer-events: auto; /* Re-enable for mobile with background */
+    }
+}
+
+.logo {
+    position: static;
+}
+
+.name-tag {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0;
+}
+
+/* Main Content */
+.main-content {
+    margin-bottom: 100px;
+    position: relative;
+    max-width: 1020px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-container {
+    display: flex;
+    max-width: 900px;
+    width: 55%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin: 0vh 0 0 0; /* Changed from 30% to 50vh to position at half the display height */
+}
+
+.main-heading {
+    color: #000;
+    font-family: "DM Sans", sans-serif;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: -1.76px;
+}
+
+.bio-text {
+    max-width: 900px;
+    width: 100%;
+}
+
+.bio-copy {
+    color: rgba(0, 0, 0, 0.50);
+    font-family: "EB Garamond", serif;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%;
+    letter-spacing: -0.72px;
+    position: relative;
+}
+
+.highlighted {
+    color: #D84242;
+    font-family: "EB Garamond", serif;
+    font-size: 72px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: -1.28px;
+}
+
+.overlay-container {
+    position: fixed;
+    right: 100px;
+    width: auto;
+    height: auto;
+    opacity: 0; /* Start with 0 opacity for transition */
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 0.3s ease; /* Added transition for smooth appearance */
+    pointer-events: none; /* Prevent overlay from interfering with mouse events */
+}
+
+.overlay-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-content img {
+    max-width: 400px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Projects Section */
+.projects-section {
+    margin: 100px 0;
+    position: relative;
+    z-index: 10; /* Added z-index to ensure projects remain clickable under transparent navbar */
+}
+
+.tags {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    margin-bottom: 40px;
+    text-align: center;
+    width: 1020px; /* Changed from width: 100%, max-width: 1020px to match projects exactly */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tag {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.50);
+    text-align: center;
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    transition: color 0.3s ease;
+}
+
+.tag:hover {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.tag-separator {
+    width: 4px;
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.50);
+    border-radius: 50%;
+    margin-top: 9px;
+}
+
+.tag.research.active, .tag.research:hover {
+    color: #F2C41C;
+}
+
+.tag.entrepreneurship.active, .tag.entrepreneurship:hover {
+    color: #3D88E8;
+}
+
+.tag.design.active, .tag.design:hover {
+    color: #BF42D8;
+}
+
+.projects-container {
+    display: flex;
+    width: 1002px; /* Exact width: 3 items of 330px + 2 gaps of 6px = 1002px */
+    margin: 0 auto;
+    align-items: center;
+    align-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Keep flex-start for grid alignment */
+}
+
+.project {
+    width: 330px;
+    height: 330px;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    z-index: 20; /* Added higher z-index to ensure projects are always clickable */
+}
+
+.project img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    position: relative;
+    /* Removed transition for immediate effect */
+}
+
+.project:hover img {
+    opacity: 0;
+}
+
+.project-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border: none;
+}
+
+.project-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    z-index: 3;
+    opacity: 0;
+    /* Removed transition for immediate effect */
+}
+
+.project:hover .project-info {
+    opacity: 1;
+}
+
+.project-title {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-transform: uppercase; /* Make project titles all-caps */
+}
+
+.project-description {
+    font-family: "EB Garamond", serif;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.50);
+    font-weight: 400;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.circle:hover {
+    border: 4px solid #F2C41C; /* Standardized thickness to 4px */
+}
+
+.square:hover {
+    border: 4px solid #3D88E8; /* Standardized thickness to 4px */
+}
+
+.octagon {
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+/* Fixed octagon hover styling */
+.octagon:hover {
+    border: none;
+}
+
+.project.octagon .project-info {
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.octagon-outline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    opacity: 0;
+    /* Removed transition for immediate effect */
+    pointer-events: none;
+}
+
+.project.octagon:hover .octagon-outline {
+    opacity: 1;
+}
+
+.thoughts-section {
+    /* override body’s default padding on the left and right */
+    margin: 0 -40px;
+    /* ensure the section is tall enough, e.g. full screen */
+    height: 100vh; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .thoughts-section .flow-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* let the SVG fill the entire section */
+    width: 100%;
+    height: 100%;
+  }
+  
+  .thoughts-content {
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+
+
+
+/* Added flow-background styles */
+.flow-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.flow-background svg {
+    width: 100%;
+    height: 100%;
+}
+
+.path {
+    fill: none;
+    stroke-linecap: round;
+}
+
+
+
+.overthinker-text {
+    color: #000;
+    text-align: center;
+    font-family: "EB Garamond", serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 0;
+}
+
+.thoughts-title {
+    color: #000;
+    text-align: center;
+    font-family: "DM Sans", sans-serif;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: -1.92px;
+    position: relative;
+    z-index: 2;
+    margin-top: -2%;
+}
+
+/* Thank You Section */
+.thank-you-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: calc(100vh - 200px);
+    padding: 80px 0;
+    text-align: center;
+    position: relative; /* Added for absolute positioning of child */
+}
+
+.thank-you-text {
+    color: #000;
+    text-align: center;
+    font-family: "EB Garamond";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    max-width: 800px;
+    position: relative;
+    top: -40px; /* Move text up by 40px */
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.footer-link {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.50);
+    text-align: center;
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.footer-link.email:hover {
+    color: #F2C41C; /* Yellow */
+}
+
+.footer-link.linkedin:hover {
+    color: #3D88E8; /* Blue */
+}
+
+.footer-link.onepage:hover, .footer-link.fullcv:hover {
+    color: #BF42D8; /* Purple */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .bio-copy {
+        font-size: 36px;
+    }
+    .highlighted {
+        font-size: 48px;
+    }
+    .projects-container {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .bio-copy {
+        font-size: 28px;
+    }
+    .highlighted {
+        font-size: 32px;
+    }
+    .main-heading {
+        font-size: 36px;
+    }
+    .thoughts-title {
+        font-size: 48px;
+    }
+    .projects-container {
+        display: flex;
+        width: calc(100% - 12px);
+        justify-content: space-between;
+        padding: 0 6px;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    .project {
+        width: calc(50% - 3px);
+        height: auto;
+        aspect-ratio: 1/1;
+        margin-bottom: 6px;
+    }
+}
+
+

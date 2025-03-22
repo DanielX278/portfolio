@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Humanities Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            padding-top: 100px; /* Added padding to account for fixed header */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Section */
+        .site-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 20px 40px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: transparent;
+        z-index: 1000;
+        pointer-events: none; /* Allow events to pass through the transparent header */
+      }
+      
+      .site-header .logo, .site-header .name-tag {
+    pointer-events: auto;
+}
+        
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+    .site-header {
+        background-color: #f5f5f5;
+        z-index: 25;
+        pointer-events: auto; /* Re-enable for mobile with background */
+    }
+}
+
+        .logo {
+            position: static;
+        }
+
+        .name-tag {
+            font-family: "DM Sans", sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-bottom: 100px;
+            position: relative;
+            max-width: 1020px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .text-container {
+            display: flex;
+            max-width: 900px;
+            width: 55%;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            margin: 50vh 0 0 0; /* Changed from 30% to 50vh to position at half the display height */
+        }
+
+        .main-heading {
+            color: #000;
+            font-family: "DM Sans", sans-serif;
+            font-size: 44px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 100%;
+            letter-spacing: -1.76px;
+        }
+
+        .bio-text {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .bio-copy {
+            color: rgba(0, 0, 0, 0.50);
+            font-family: "EB Garamond", serif;
+            font-size: 42px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 110%;
+            letter-spacing: -0.72px;
+            position: relative;
+        }
+
+        .highlighted {
+            color: #D84242;
+            font-family: "EB Garamond", serif;
+            font-size: 72px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 100%;
+            letter-spacing: -1.28px;
+        }
+
+        .overlay-container {
+            position: fixed;
+            right: 100px;
+            width: auto;
+            height: auto;
+            opacity: 0; /* Start with 0 opacity for transition */
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.3s ease; /* Added transition for smooth appearance */
+            pointer-events: none; /* Prevent overlay from interfering with mouse events */
+        }
+
+        .overlay-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .overlay-content img {
+            max-width: 400px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            margin: 100px 0;
+            position: relative;
+            z-index: 10; /* Added z-index to ensure projects remain clickable under transparent navbar */
+        }
+
+        .tags {
+        display: flex;
+        justify-content: center;
+        gap: 9px;
+        margin-bottom: 40px;
+        text-align: center;
+        width: 1020px; /* Changed from width: 100%, max-width: 1020px to match projects exactly */
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+        .tag {
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.50);
+            text-align: center;
+            font-family: "DM Sans", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            transition: color 0.3s ease;
+        }
+
+        .tag:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .tag-separator {
+            width: 4px;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.50);
+            border-radius: 50%;
+            margin-top: 9px;
+        }
+
+        .tag.research.active, .tag.research:hover {
+            color: #F2C41C;
+        }
+
+        .tag.entrepreneurship.active, .tag.entrepreneurship:hover {
+            color: #3D88E8;
+        }
+
+        .tag.design.active, .tag.design:hover {
+            color: #BF42D8;
+        }
+
+        .projects-container {
+    display: flex;
+    width: 1002px; /* Exact width: 3 items of 330px + 2 gaps of 6px = 1002px */
+    margin: 0 auto;
+    align-items: center;
+    align-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Keep flex-start for grid alignment */
+}
+
+        .project {
+            width: 330px;
+            height: 330px;
+            flex-shrink: 0;
+            aspect-ratio: 1/1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #f5f5f5;
+            z-index: 20; /* Added higher z-index to ensure projects are always clickable */
+        }
+
+        .project img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;
+            position: relative;
+            /* Removed transition for immediate effect */
+        }
+
+        .project:hover img {
+            opacity: 0;
+        }
+
+        .project-shape {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            border: none;
+        }
+
+        .project-info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            z-index: 3;
+            opacity: 0;
+            /* Removed transition for immediate effect */
+        }
+
+        .project:hover .project-info {
+            opacity: 1;
+        }
+
+        .project-title {
+            font-family: "DM Sans", sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: uppercase; /* Make project titles all-caps */
+        }
+
+        .project-description {
+            font-family: "EB Garamond", serif;
+            font-size: 18px;
+        }
+
+        .circle {
+            border-radius: 50%;
+        }
+
+        .circle:hover {
+            border: 4px solid #F2C41C; /* Standardized thickness to 4px */
+        }
+
+        .square:hover {
+            border: 4px solid #3D88E8; /* Standardized thickness to 4px */
+        }
+
+        .octagon {
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        /* Fixed octagon hover styling */
+        .octagon:hover {
+            border: none;
+        }
+
+        .project.octagon .project-info {
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        .octagon-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            opacity: 0;
+            /* Removed transition for immediate effect */
+            pointer-events: none;
+        }
+
+        .project.octagon:hover .octagon-outline {
+            opacity: 1;
+        }
+
+        /* Shaping Thoughts Section */
+        .thoughts-section {
+            margin: 0;
+            position: relative;
+            text-align: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 100px;
+            box-sizing: border-box;
+            overflow: hidden; /* Ensure flow animation stays contained */
+            width: 120%;
+            margin-left: -10%; /* Center content with negative margin */
+
+        }
+
+        /* Added flow-background styles */
+        .flow-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .flow-background svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .path {
+      fill: none;
+      stroke-linecap: round;
+    }
+
+        /* Added thoughts-content container */
+        .thoughts-content {
+            position: relative;
+            z-index: 10; /* Ensure content appears above the flow animation */
+        }
+
+        .overthinker-text {
+            color: #000;
+            text-align: center;
+            font-family: "EB Garamond", serif;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-bottom: 0;
+        }
+
+        .thoughts-title {
+            color: #000;
+            text-align: center;
+            font-family: "DM Sans", sans-serif;
+            font-size: 64px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: normal;
+            letter-spacing: -1.92px;
+            position: relative;
+            z-index: 2;
+            margin-top: 0;
+        }
+
+        /* Thank You Section */
+        .thank-you-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: calc(100vh - 200px);
+            padding: 80px 0;
+            text-align: center;
+            position: relative; /* Added for absolute positioning of child */
+        }
+        
+        .thank-you-text {
+            color: #000;
+            text-align: center;
+            font-family: "EB Garamond";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            max-width: 800px;
+            position: relative;
+            top: -40px; /* Move text up by 40px */
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 9px;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .footer-link {
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.50);
+            text-align: center;
+            font-family: "DM Sans", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .footer-link.email:hover {
+            color: #F2C41C; /* Yellow */
+        }
+        
+        .footer-link.linkedin:hover {
+            color: #3D88E8; /* Blue */
+        }
+        
+        .footer-link.onepage:hover, .footer-link.fullcv:hover {
+            color: #BF42D8; /* Purple */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .bio-copy {
+                font-size: 36px;
+            }
+            .highlighted {
+                font-size: 48px;
+            }
+            .projects-container {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bio-copy {
+                font-size: 28px;
+            }
+            .highlighted {
+                font-size: 32px;
+            }
+            .main-heading {
+                font-size: 36px;
+            }
+            .thoughts-title {
+                font-size: 48px;
+            }
+            .projects-container {
+                display: flex;
+                width: calc(100% - 12px);
+                justify-content: space-between;
+                padding: 0 6px;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+            .project {
+                width: calc(50% - 3px);
+                height: auto;
+                aspect-ratio: 1/1;
+                margin-bottom: 6px;
+            }
+
+            
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header/Navbar -->
+    <header class="site-header">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="26" viewBox="0 0 72 26" fill="none">
+                <ellipse cx="9.52039" cy="9.44219" rx="9.52039" ry="9.44219" transform="matrix(-1 0 0 1 19.0391 3.14453)" fill="#F2C41C"/>
+                <rect width="18.4968" height="18.3448" transform="matrix(-1 0 0 1 43.1406 3.77344)" fill="#3D88E8"/>
+                <path d="M62.7367 3.81225L55.0605 3.80711L49.629 9.18675L49.6238 16.7998L55.048 22.1868L62.7242 22.1919L68.1557 16.8123L68.1609 9.19916L62.7367 3.81225Z" fill="#BF42D8"/>
+            </svg>
+        </div>
+        <div class="name-tag">DANIELE BELFIORE</div>
+    </header>
+    <div class="container">
+        <!-- Main Content with Bio -->
+        <section class="main-content">
+            <div class="text-container">
+                <h1 class="main-heading">I don't know what I'll do</h1>
+                <div class="bio-text">
+                    <p class="bio-copy">
+                        <span class="bio-segment" data-color="#D84242" data-overlay="EPFL">because I'm a digital humanities master student merging ux design and data science for cultural insights</span>, 
+                        <span class="bio-segment" data-color="#4274D8" data-overlay="Economics">with a blended background in economics, management and computer science</span>, 
+                        <span class="bio-segment" data-color="#E61428" data-overlay="Design">who'd love to become an information designer</span>, 
+                        <span class="bio-segment" data-color="#588DCA" data-overlay="Urban">obsessed with long walks and people-watching in crowded cities</span>, 
+                        <span class="bio-segment" data-color="#7758CA" data-overlay="Music">dreaming of my songwriter moment</span>, 
+                        <span class="bio-segment" data-color="#52874F" data-overlay="Easter">who likes to add easter eggs to long copies</span>, 
+                        <span class="bio-segment" data-color="#C28E00" data-overlay="Archives">experienced in turning complex massive historiographical archives into accessible experiences</span>, 
+                        <span class="bio-segment" data-color="#028C32" data-overlay="Research">passionate about human-centered research with real-world applications and high market potential</span>...
+                    </p>
+                </div>
+                <h1 class="main-heading">but I'm having fun.</h1>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay-content"></div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects-section">
+            <div class="tags">
+                <span class="tag research" data-tag="research">RESEARCH</span>
+                <div class="tag-separator"></div>
+                <span class="tag entrepreneurship" data-tag="entrepreneurship">ENTREPRENEURSHIP</span>
+                <div class="tag-separator"></div>
+                <span class="tag design" data-tag="design">DESIGN</span>
+            </div>
+
+            <div class="projects-container">
+                <!-- Project 1: Circle Shape -->
+                <div class="project circle" data-categories="research">
+                    <div class="project-shape circle"></div>
+                    <img src="montreux.jpg" alt="HOP ON THE TRAIN">
+                    <div class="project-info">
+                        <h3 class="project-title">HOP ON THE TRAIN</h3>
+                        <p class="project-description">A digital exhibition conceived for the Montreal Film Festival, synching interconnected stories from the archives of the festival</p>
+                    </div>
+                </div>
+
+                <!-- Project 2: Abstract Water -->
+                <div class="project square" data-categories="design">
+                    <div class="project-shape square"></div>
+                    <img src="cabina.jpg" alt="Abstract Water">
+                    <div class="project-info">
+                        <h3 class="project-title">Water Studies</h3>
+                        <p class="project-description">Visual explorations of movement and light in water</p>
+                    </div>
+                </div>
+
+                <!-- Project 3: Concert -->
+                <div class="project square" data-categories="design entrepreneurship">
+                    <div class="project-shape square"></div>
+                    <img src="catania.jpg" alt="Concert">
+                    <div class="project-info">
+                        <h3 class="project-title">Event Visualization</h3>
+                        <p class="project-description">Creating immersive visual experiences for live performances</p>
+                    </div>
+                </div>
+
+                <!-- Project 4: Painting Palette -->
+                <div class="project octagon" data-categories="design research">
+                    <div class="project-shape octagon"></div>
+                    <img src="catania.jpg" alt="Painting Palette">
+                    <div class="project-info">
+                        <h3 class="project-title">Color Theory Studies</h3>
+                        <p class="project-description">Research-based exploration of color theory in digital environments</p>
+                    </div>
+                    <div class="octagon-outline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 330 330" fill="none">
+                            <path d="M99 0L231 0L330 99L330 231L231 330L99 330L0 231L0 99L99 0Z" stroke="#BF42D8" stroke-width="6" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Project 5: Concert Crowd -->
+                <div class="project octagon" data-categories="entrepreneurship">
+                    <div class="project-shape octagon"></div>
+                    <img src="catania.jpg" alt="Concert Crowd">
+                    <div class="project-info">
+                        <h3 class="project-title">Crowd Dynamics</h3>
+                        <p class="project-description">Analysis of social behavior in crowded event spaces</p>
+                    </div>
+                    <div class="octagon-outline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 330 330" fill="none">
+                            <path d="M99 0L231 0L330 99L330 231L231 330L99 330L0 231L0 99L99 0Z" stroke="#BF42D8" stroke-width="6" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Project 6: Abstract Shape -->
+                <div class="project square" data-categories="design">
+                    <div class="project-shape square"></div>
+                    <img src="montreux.jpg" alt="Abstract Shape">
+                    <div class="project-info">
+                        <h3 class="project-title">Form Studies</h3>
+                        <p class="project-description">Exploration of organic forms and structures</p>
+                    </div>
+                </div>
+
+                <!-- Project 7: Handwriting -->
+                <div class="project circle" data-categories="research">
+                    <div class="project-shape circle"></div>
+                    <img src="cabina.jpg" alt="Handwritten Text">
+                    <div class="project-info">
+                        <h3 class="project-title">Script Analysis</h3>
+                        <p class="project-description">Digitizing and analyzing historical handwritten documents</p>
+                    </div>
+                </div>
+
+                <!-- Project 8: Underwater Scene -->
+                <div class="project octagon" data-categories="research design">
+                    <div class="project-shape octagon"></div>
+                    <img src="montreux.jpg" alt="Underwater Scene">
+                    <div class="project-info">
+                        <h3 class="project-title">Marine Environments</h3>
+                        <p class="project-description">Visual database of underwater ecosystems for conservation research</p>
+                    </div>
+                    <div class="octagon-outline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 330 330" fill="none">
+                            <path d="M99 0L231 0L330 99L330 231L231 330L99 330L0 231L0 99L99 0Z" stroke="#BF42D8" stroke-width="6" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Shaping Thoughts Section - moved outside container for full width -->
+    <section class="thoughts-section">
+        <!-- Added flow animation background -->
+        <div class="flow-background">
+            <svg id="flow-canvas"></svg>
+        </div>
+        <!-- Wrapped content in a container for z-indexing -->
+        <div class="thoughts-content">
+            <p class="overthinker-text">I'm an overthinker</p>
+            <h2 class="thoughts-title">shaping my thoughts</h2>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Thank You Section -->
+        <section class="thank-you-section">
+            <p class="thank-you-text">Thanks for scrolling!<br>Hope you found something you like in all that mess.</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <span class="footer-link email">SEND AN EMAIL</span>
+                <div class="tag-separator"></div>
+                <span class="footer-link linkedin">LINKEDIN</span>
+                <div class="tag-separator"></div>
+                <span class="footer-link onepage">ONE-PAGE CV</span>
+                <div class="tag-separator"></div>
+                <span class="footer-link fullcv">FULL CV</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Global SVG scaling factor
+        const svgScaleFactor = 1.0; // Adjust this value to scale all SVGs (1.0 = 100%, 1.5 = 150%, etc.)
+        
+        // Bio Segment Hover Animation
+        const bioSegments = document.querySelectorAll('.bio-segment');
+        const overlayContainer = document.querySelector('.overlay-container');
+        const overlayContent = document.querySelector('.overlay-content');
+
+        // Combined configuration for SVG overlays
+        const svgConfig = {
+            'EPFL': {
+                filename: 'epfl.svg',
+                scale: 0.85,
+                width: 200,
+                height: 100,
+                position: { right: '15%', topOffset: '0%' }
+            },
+            'Economics': {
+                filename: 'bocconi.svg',
+                scale: 0.9,
+                width: 350,
+                height: 150,
+                position: { right: '18%', topOffset: '5%' }
+            },
+            'Design': {
+                filename: 'pentagram.svg',
+                scale: 0.75,
+                width: 250,
+                height: 100,
+                position: { right: '16%', topOffset: '-8%' }
+            },
+            'Urban': {
+                filename: 'melb.svg',
+                scale: 0.85,
+                width: 350,
+                height: 120,
+                position: { right: '20%', topOffset: '4%' }
+            },
+            'Music': {
+                filename: 'falais.svg',
+                scale: 0.8,
+                width: 400,
+                height: 120,
+                position: { right: '14%', topOffset: '-6%' }
+            },
+            'Easter': {
+                filename: 'hehe.svg',
+                scale: 0.7,
+                width: 120,
+                height: 80,
+                position: { right: '17%', topOffset: '7%' }
+            },
+            'Archives': {
+                filename: 'yap.svg',
+                scale: 0.85,
+                width: 380,
+                height: 100,
+                position: { right: '15%', topOffset: '-3%' }
+            },
+            'Research': {
+                filename: 'business.svg',
+                scale: 0.85,
+                width: 350,
+                height: 150,
+                position: { right: '19%', topOffset: '2%' }
+            }
+        };
+
+        bioSegments.forEach(segment => {
+            // Set initial transition
+            segment.style.transition = 'color 0.3s ease';
+            
+            segment.addEventListener('mouseenter', function() {
+                // Get the assigned color
+                const color = this.getAttribute('data-color');
+                
+                // Highlight the text with simple color change
+                this.style.color = color;
+                
+                // Show the overlay with the specific image
+                const overlayType = this.getAttribute('data-overlay');
+                const config = svgConfig[overlayType];
+                
+                // Clear previous content and create image element
+                overlayContent.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = config.filename;
+                img.alt = overlayType;
+                img.width = config.width * config.scale * svgScaleFactor;
+                img.height = config.height * config.scale * svgScaleFactor;
+                overlayContent.appendChild(img);
+                
+                // Apply varied positioning
+                overlayContainer.style.right = config.position.right;
+                overlayContainer.style.display = 'flex';
+                
+                // Position the overlay next to the text with variation
+                const rect = this.getBoundingClientRect();
+                const topOffsetPercent = config.position.topOffset;
+                const topOffset = rect.height * (parseFloat(topOffsetPercent) / 100);
+                overlayContainer.style.top = `${rect.top + topOffset}px`;
+                
+                // Fade in the overlay with animation
+                setTimeout(() => {
+                    overlayContainer.style.opacity = '1';
+                }, 10);
+            });
+
+            segment.addEventListener('mouseleave', function() {
+                // Reset the text color
+                this.style.color = 'rgba(0, 0, 0, 0.5)';
+                
+                // Fade out the overlay
+                overlayContainer.style.opacity = '0';
+                
+                // After fade-out completes, hide the overlay
+                setTimeout(() => {
+                    if (overlayContainer.style.opacity === '0') {
+                        overlayContainer.style.display = 'none';
+                        overlayContent.innerHTML = '';
+                    }
+                }, 300);
+            });
+        });
+
+        // Footer links hover effect
+        const footerLinks = document.querySelectorAll('.footer-link');
+        
+        footerLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Handle link actions here (for future implementation)
+                console.log('Clicked on', this.textContent);
+            });
+        });
+
+        // Project Filtering
+        const tags = document.querySelectorAll('.tag');
+        const projects = document.querySelectorAll('.project');
+        const projectsContainer = document.querySelector('.projects-container');
+        let originalOrder = [];
+        let activeFilter = null;
+
+        // Store the original order of projects
+        projects.forEach(project => {
+            originalOrder.push(project);
+        });
+
+        tags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                const filter = this.getAttribute('data-tag');
+                
+                // If clicking the same tag, reset everything
+                if (this.classList.contains('active')) {
+                    resetProjects();
+                    tags.forEach(t => t.classList.remove('active'));
+                    activeFilter = null;
+                } else {
+                    // Remove active class from all tags
+                    tags.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tag
+                    this.classList.add('active');
+                    activeFilter = filter;
+                    
+                    // Reorder projects based on filter
+                    reorderProjects(filter);
+                }
+            });
+        });
+
+        function resetProjects() {
+            // Reset to original order
+            projectsContainer.innerHTML = '';
+            originalOrder.forEach(project => {
+                project.style.opacity = '1';
+                project.style.filter = 'grayscale(0%)';
+                projectsContainer.appendChild(project);
+            });
+        }
+
+        function reorderProjects(filter) {
+            // Create arrays for the filtered order
+            let matchingProjectsCircle = [];
+            let matchingProjectsSquare = [];
+            let matchingProjectsOctagon = [];
+            let nonMatchingProjects = [];
+            
+            projects.forEach(project => {
+                const categories = project.getAttribute('data-categories').split(' ');
+                
+                if (categories.includes(filter)) {
+                    // Check the shape of the project and sort accordingly
+                    if (project.classList.contains('circle') && filter === 'research') {
+                        matchingProjectsCircle.push(project);
+                    } else if (project.classList.contains('square') && filter === 'entrepreneurship') {
+                        matchingProjectsSquare.push(project);
+                    } else if (project.classList.contains('octagon') && filter === 'design') {
+                        matchingProjectsOctagon.push(project);
+                    } else {
+                        // This is a matching project but not of the primary shape for this filter
+                        if (filter === 'research' && !project.classList.contains('circle')) {
+                            matchingProjectsOctagon.push(project);
+                        } else if (filter === 'entrepreneurship' && !project.classList.contains('square')) {
+                            matchingProjectsCircle.push(project);
+                        } else if (filter === 'design' && !project.classList.contains('octagon')) {
+                            matchingProjectsSquare.push(project);
+                        }
+                    }
+                    project.style.opacity = '1';
+                    project.style.filter = 'grayscale(0%)';
+                } else {
+                    nonMatchingProjects.push(project);
+                    project.style.opacity = '0.3';
+                    project.style.filter = 'grayscale(100%)';
+                }
+            });
+            
+            // Clear container
+            projectsContainer.innerHTML = '';
+            
+            // Add matching projects first by shape, then non-matching
+            if (filter === 'research') {
+                matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
+            } else if (filter === 'entrepreneurship') {
+                matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
+            } else if (filter === 'design') {
+                matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
+            }
+            
+            nonMatchingProjects.forEach(project => {
+                projectsContainer.appendChild(project);
+            });
+        }
+
+        // Helper function to get random color
+        function getRandomColor() {
+            const colors = ['#D84242', '#3D88E8', '#F2C41C', '#BF42D8'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // No animations to initialize
+        });
+
+        // Flow animation code
+        // Base configuration 
+        const flowConfig = {
+            colors: ['#BF42D8', '#F2C41C', '#3D88E8'], // Purple, Yellow, Blue
+            strokeWidth: 6, // Reduced thickness
+            lineCount: 14, // Fewer lines on screen
+            baseSpeed: 180, // Base speed (pixels per second)
+            
+            // Line personalities - each line will take one of these movement styles
+            personalities: [
+                {
+                    name: "gentle", // Gentle flowing with minimal vertical change
+                    frequency: 0.5,  // Lower frequency = fewer curves
+                    minAmplitude: 20, 
+                    maxAmplitude: 70,
+                    speedFactor: 1.0,
+                    lengthFactor: 1.0,
+                    rarity: 0.3 // 30% of lines
+                },
+                {
+                    name: "wavy", // More pronounced waves
+                    frequency: 2.0, // Higher frequency = more curves
+                    minAmplitude: 40,
+                    maxAmplitude: 120,
+                    speedFactor: 0.9, // Slightly slower
+                    lengthFactor: 1.1, // Slightly longer
+                    rarity: 0.25 // 25% of lines
+                },
+                {
+                    name: "dramatic", // Big sweeping curves
+                    frequency: 0.7,
+                    minAmplitude: 80, // Much larger amplitude
+                    maxAmplitude: 180,
+                    speedFactor: 0.8, // Slower
+                    lengthFactor: 1.3, // Longer
+                    rarity: 0.2 // 20% of lines
+                },
+                {
+                    name: "swift", // Quick with subtle curves
+                    frequency: 1.1,
+                    minAmplitude: 65, // Higher minimum amplitude
+                    maxAmplitude: 110,
+                    speedFactor: 1.4, // Faster
+                    lengthFactor: 0.9, // Shorter
+                    rarity: 0.25 // 25% of lines
+                }
+            ],
+            
+            // General parameters
+            minLength: 250, // Shorter minimum line length
+            maxLength: 700, // Reduced maximum line length
+            minSpeed: 140,  // Minimum speed
+            maxSpeed: 340,  // Maximum speed
+            
+            // Amplitude constraints (to limit maximum amplitude in certain conditions)
+            amplitudeConstraints: {
+                maxUpperBound: 140,  // Absolute maximum amplitude allowed
+                speedLimit: 200,     // Speeds above this value get reduced amplitude
+                speedFactor: 0.85,   // How much speed affects amplitude reduction
+                shortLineLimit: 400, // Lines shorter than this get reduced amplitude
+                shortLineFactor: 0.8 // Amplitude reduction for short lines
+            },
+            
+            // Loop formation (rare)
+            loopFormation: {
+                enabled: true,
+                probability: 0.06,   // 6% chance for a line to have a loop capability
+                minTimeBetween: 12,  // Minimum seconds between loops on same line
+                maxTimeBetween: 30,  // Maximum seconds between loops on same line
+                loopSize: 0.6,       // Base size of loops relative to line amplitude
+                loopVariation: 0.3,  // Variation in loop size (± this percentage)
+                smoothness: 0.92     // How smooth the loop transition is (0-1)
+            },
+            
+            // Speed variation (for occasional sprinting/slowing)
+            speedVariation: {
+                enabled: true,
+                frequency: 0.3,    // How often speed changes occur (higher = more often)
+                intensity: 0.25,   // How dramatic the speed changes are (0-1)
+                minDuration: 0.8,  // Minimum duration of speed change in seconds
+                maxDuration: 2.0   // Maximum duration of speed change in seconds
+            },
+            
+            // Additional smoothing parameters
+            smoothingParameters: {
+                pathTension: 0.88,        // Higher values create smoother paths (0-1)
+                curveBlending: 0.92,      // How smoothly curves blend together
+                tangentSmoothing: 0.85,   // Smooth tangent vectors for Bezier curves
+                endpointContinuity: true  // Ensure smooth connections between segments
+            },
+            // Smoothness controls
+            controlPointSpan: 0.4, // Control point distance factor
+            pathSmoothing: 0.92,   // Path smoothing factor
+            verticalVariation: 0.6  // How much vertical position varies
+        };
+
+        // Get the SVG element for flow animation - targeting specifically the one in thoughts section
+        const flowCanvas = document.getElementById('flow-canvas');
+        let flowWidth, flowHeight;
+        
+        // Initialize flow dimensions based on the thoughts section size
+        function updateFlowDimensions() {
+            const thoughtsSection = document.querySelector('.thoughts-section');
+            flowWidth = thoughtsSection.offsetWidth;
+            flowHeight = thoughtsSection.offsetHeight;
+        }
+        
+        // Call initially and on resize
+        updateFlowDimensions();
+        window.addEventListener('resize', updateFlowDimensions);
+
+        // FlowLine class - each line will be a flowing entity with distinct personality
+        class FlowLine {
+            constructor() {
+                this.initialize();
+            }
+
+            // Select a personality based on rarity weights
+            selectPersonality() {
+                const totalWeight = flowConfig.personalities.reduce((sum, p) => sum + p.rarity, 0);
+                let randomValue = Math.random() * totalWeight;
+                
+                for (const personality of flowConfig.personalities) {
+                    if (randomValue < personality.rarity) {
+                        return personality;
+                    }
+                    randomValue -= personality.rarity;
+                }
+                
+                // Fallback
+                return flowConfig.personalities[0];
+            }
+
+            initialize() {
+                // Select a movement personality
+                this.personality = this.selectPersonality();
+                
+                // Random color from our palette
+                this.color = flowConfig.colors[Math.floor(Math.random() * flowConfig.colors.length)];
+                
+                // Line length based on personality with bias toward shorter lines
+                const lengthRandom = Math.pow(Math.random(), 1.5); // Bias toward shorter values
+                this.lineLength = (flowConfig.minLength + lengthRandom * (flowConfig.maxLength - flowConfig.minLength)) * 
+                                this.personality.lengthFactor;
+                
+                // Speed based on personality
+                this.speed = (flowConfig.minSpeed + Math.random() * (flowConfig.maxSpeed - flowConfig.minSpeed)) * 
+                            this.personality.speedFactor;
+                this.baseSpeed = this.speed; // Store the base speed for variations
+                
+                // Speed variation state
+                this.speedVariationState = {
+                    active: false,
+                    factor: 1.0,
+                    timeLeft: 0,
+                    nextChangeTime: this.getRandomSpeedChangeTime()
+                };
+                
+                // Amplitude based on personality
+                let baseAmplitude = this.personality.minAmplitude + 
+                                Math.random() * (this.personality.maxAmplitude - this.personality.minAmplitude);
+                
+                // Apply amplitude constraints
+                if (this.speed > flowConfig.amplitudeConstraints.speedLimit) {
+                    // Fast-moving lines get reduced amplitude
+                    const reductionFactor = 1 - (this.speed - flowConfig.amplitudeConstraints.speedLimit) / 
+                                        (flowConfig.maxSpeed - flowConfig.amplitudeConstraints.speedLimit) * 
+                                        (1 - flowConfig.amplitudeConstraints.speedFactor);
+                    baseAmplitude *= reductionFactor;
+                }
+                
+                if (this.lineLength < flowConfig.amplitudeConstraints.shortLineLimit) {
+                    // Short lines get reduced amplitude
+                    const reductionFactor = flowConfig.amplitudeConstraints.shortLineFactor + 
+                                        (1 - flowConfig.amplitudeConstraints.shortLineFactor) * 
+                                        (this.lineLength / flowConfig.amplitudeConstraints.shortLineLimit);
+                    baseAmplitude *= reductionFactor;
+                }
+                
+                // Ensure amplitude never exceeds the maximum allowed
+                this.amplitude = Math.min(baseAmplitude, flowConfig.amplitudeConstraints.maxUpperBound);
+                
+                // Determine if this line can form loops (rare)
+                this.canFormLoops = flowConfig.loopFormation.enabled && Math.random() < flowConfig.loopFormation.probability;
+                
+                // Loop state if this line can form loops
+                if (this.canFormLoops) {
+                    this.loopState = {
+                        active: false,
+                        position: 0,  // 0-1 position along the line's length
+                        timeLeft: 0,
+                        nextLoopTime: flowConfig.loopFormation.minTimeBetween + 
+                                    Math.random() * (flowConfig.loopFormation.maxTimeBetween - 
+                                                    flowConfig.loopFormation.minTimeBetween),
+                        size: flowConfig.loopFormation.loopSize * (1 - flowConfig.loopFormation.loopVariation + 
+                            Math.random() * flowConfig.loopFormation.loopVariation * 2) * this.amplitude,
+                        direction: Math.random() > 0.5 ? 1 : -1 // Clockwise or counter-clockwise
+                    };
+                }
+                
+                // Frequency based on personality (with slight randomization)
+                this.frequency = this.personality.frequency * (0.8 + Math.random() * 0.4);
+                
+                // Random vertical position with more variation
+                this.centerY = flowHeight * (0.2 + Math.random() * flowConfig.verticalVariation);
+                
+                // Random phase
+                this.phase = Math.random() * Math.PI * 2;
+                
+                // Generate guide points specific to this line's personality
+                this.generateGuidePoints();
+                
+                // Position tracking
+                this.x = -this.lineLength; // Start off-screen to the left
+                this.progress = 0;
+                
+                // Create SVG path element
+                this.element = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                this.element.classList.add('path');
+                this.element.setAttribute('stroke', this.color);
+                this.element.setAttribute('stroke-width', flowConfig.strokeWidth);
+                
+                // Add to SVG
+                flowCanvas.appendChild(this.element);
+            }
+
+            // Generate guide points based on the line's personality
+            generateGuidePoints() {
+                this.guidePoints = [];
+                
+                // Number of points varies by personality
+                let numPoints;
+                if (this.personality.name === "gentle") {
+                    numPoints = 3 + Math.floor(Math.random() * 2); // 3-4 points
+                } else if (this.personality.name === "dramatic") {
+                    numPoints = 4 + Math.floor(Math.random() * 3); // 4-6 points (more dramatic changes)
+                } else {
+                    numPoints = 4 + Math.floor(Math.random() * 2); // 4-5 points (default)
+                }
+                
+                // Starting point
+                this.guidePoints.push({
+                    x: 0,
+                    y: 0
+                });
+                
+                // Generate distinct pattern based on personality
+                if (this.personality.name === "dramatic") {
+                    // Big sweeping curves - more extreme y positions
+                    for (let i = 1; i < numPoints - 1; i++) {
+                        const normalizedX = i / (numPoints - 1);
+                        // Alternating up and down with large movements
+                        const direction = i % 2 === 0 ? 1 : -1;
+                        const yOffset = direction * (0.7 + Math.random() * 0.3) * this.amplitude;
+                        
+                        this.guidePoints.push({
+                            x: normalizedX,
+                            y: yOffset
+                        });
+                    }
+                } else if (this.personality.name === "wavy") {
+                    // More frequent waves
+                    for (let i = 1; i < numPoints - 1; i++) {
+                        const normalizedX = i / (numPoints - 1);
+                        // Sine-based waves with higher frequency
+                        const yOffset = Math.sin(normalizedX * Math.PI * 2 + this.phase) * this.amplitude * 0.8;
+                        
+                        this.guidePoints.push({
+                            x: normalizedX,
+                            y: yOffset
+                        });
+                    }
+                } else if (this.personality.name === "swift") {
+                    // Quicker with smaller movements
+                    for (let i = 1; i < numPoints - 1; i++) {
+                        const normalizedX = i / (numPoints - 1);
+                        // Slight movements with some randomness
+                        const yOffset = (Math.sin(normalizedX * Math.PI * 1.5 + this.phase) * 0.7 + 
+                                        (Math.random() * 0.6 - 0.3)) * this.amplitude;
+                        
+                        this.guidePoints.push({
+                            x: normalizedX,
+                            y: yOffset
+                        });
+                    }
+                } else {
+                    // Gentle default pattern
+                    for (let i = 1; i < numPoints - 1; i++) {
+                        const normalizedX = i / (numPoints - 1);
+                        // Smoother, more subtle curves
+                        const yOffset = Math.sin(normalizedX * Math.PI + this.phase) * this.amplitude * 0.6;
+                        
+                        this.guidePoints.push({
+                            x: normalizedX,
+                            y: yOffset
+                        });
+                    }
+                }
+                
+                // End point - with some variance
+                this.guidePoints.push({
+                    x: 1,
+                    y: (Math.random() * 2 - 1) * this.amplitude * 0.4
+                });
+                
+                // Add subtle variations to keep things natural
+                // Only do this for personalities that should have extra variation
+                if (this.personality.name === "wavy" || this.personality.name === "dramatic") {
+                    for (let i = 1; i < this.guidePoints.length - 1; i++) {
+                        // Add subtle adjustment to prevent perfect regularity
+                        this.guidePoints[i].y += (Math.random() * 2 - 1) * this.amplitude * 0.15;
+                    }
+                }
+            }
+
+            update(deltaTime) {
+                const deltaSeconds = deltaTime / 1000;
+                
+                // Update speed variation if enabled
+                if (flowConfig.speedVariation.enabled) {
+                    this.updateSpeedVariation(deltaTime);
+                }
+                
+                // Update loop formation if this line can form loops
+                if (this.canFormLoops) {
+                    this.updateLoopFormation(deltaSeconds);
+                }
+                
+                // Move based on current speed (which may include variation)
+                this.progress += (this.speed * deltaTime) / 1000;
+                this.x = this.progress - this.lineLength;
+                
+                // Reset when it moves off-screen
+                if (this.x > flowWidth) {
+                    flowCanvas.removeChild(this.element);
+                    this.initialize();
+                    return;
+                }
+                
+                // Draw the flowing line
+                this.drawFlowingLine();
+            }
+            
+            // Update loop formation state
+            updateLoopFormation(deltaSeconds) {
+                if (this.loopState.active) {
+                    // Currently in a loop, update time left
+                    this.loopState.timeLeft -= deltaSeconds;
+                    
+                    // End loop if time is up
+                    if (this.loopState.timeLeft <= 0) {
+                        this.loopState.active = false;
+                        this.loopState.nextLoopTime = flowConfig.loopFormation.minTimeBetween + 
+                                                    Math.random() * (flowConfig.loopFormation.maxTimeBetween - 
+                                                                    flowConfig.loopFormation.minTimeBetween);
+                    }
+                } else {
+                    // Not in a loop, check if it's time to start one
+                    this.loopState.nextLoopTime -= deltaSeconds;
+                    
+                    if (this.loopState.nextLoopTime <= 0 && this.x > 0 && this.x < flowWidth - this.lineLength) {
+                        // Start a new loop at a random position along the line
+                        // But make sure the line is fully visible on screen
+                        this.loopState.active = true;
+                        this.loopState.position = 0.3 + Math.random() * 0.4; // Position 30-70% along visible line
+                        this.loopState.timeLeft = 1.2 + Math.random() * 0.8; // Loop lasts 1.2-2.0 seconds
+                        this.loopState.direction = Math.random() > 0.5 ? 1 : -1; // Random direction
+                    }
+                }
+            }
+            
+            // Get random time for next speed change
+            getRandomSpeedChangeTime() {
+                return 1.5 + Math.random() * 5; // 1.5 to 6.5 seconds
+            }
+            
+            // Update speed variation - occasionally speed up or slow down
+            updateSpeedVariation(deltaTime) {
+                const deltaSeconds = deltaTime / 1000;
+                
+                // Check if we need to start/end a speed variation
+                if (this.speedVariationState.active) {
+                    // Currently in a speed change, update time left
+                    this.speedVariationState.timeLeft -= deltaSeconds;
+                    
+                    // End speed change if time is up
+                    if (this.speedVariationState.timeLeft <= 0) {
+                        this.speedVariationState.active = false;
+                        this.speedVariationState.nextChangeTime = this.getRandomSpeedChangeTime();
+                        this.speed = this.baseSpeed; // Reset to base speed
+                    }
+                } else {
+                    // Not in a speed change, check if it's time to start one
+                    this.speedVariationState.nextChangeTime -= deltaSeconds;
+                    
+                    if (this.speedVariationState.nextChangeTime <= 0) {
+                        // Start a new speed variation
+                        const intensity = flowConfig.speedVariation.intensity;
+                        
+                        // Determine if speeding up or slowing down (2/3 chance to speed up)
+                        const isSpeedup = Math.random() < 0.6;
+                        
+                        // Calculate speed factor: speedup = 1+intensity, slowdown = 1-intensity*0.8
+                        const speedFactor = isSpeedup ? 
+                                        (1 + intensity * (0.8 + Math.random() * 0.4)) : 
+                                        (1 - intensity * (0.5 + Math.random() * 0.3));
+                        
+                        // Apply the speed change
+                        this.speedVariationState.active = true;
+                        this.speedVariationState.factor = speedFactor;
+                        this.speed = this.baseSpeed * speedFactor;
+                        
+                        // Set duration of this speed change
+                        this.speedVariationState.timeLeft = flowConfig.speedVariation.minDuration + 
+                                                            Math.random() * (flowConfig.speedVariation.maxDuration - 
+                                                                            flowConfig.speedVariation.minDuration);
+                    }
+                }
+            }
+
+            // Get a y-position that smoothly follows our guide points
+            getYForX(normalizedX) {
+                // Find the guide point segment we're in
+                let beforePoint = this.guidePoints[0];
+                let afterPoint = this.guidePoints[this.guidePoints.length - 1];
+                
+                for (let i = 0; i < this.guidePoints.length - 1; i++) {
+                    if (normalizedX >= this.guidePoints[i].x && normalizedX <= this.guidePoints[i + 1].x) {
+                        beforePoint = this.guidePoints[i];
+                        afterPoint = this.guidePoints[i + 1];
+                        break;
+                    }
+                }
+                
+                // Calculate how far we are between these two guide points (0-1)
+                const segmentLength = afterPoint.x - beforePoint.x;
+                if (segmentLength === 0) return this.centerY + beforePoint.y;
+                
+                const segmentProgress = (normalizedX - beforePoint.x) / segmentLength;
+                
+                // Use a smooth easing function for interpolation
+                const t = this.smoothStep(segmentProgress);
+                
+                // Interpolate between the two guide points
+                const yPosition = beforePoint.y + (afterPoint.y - beforePoint.y) * t;
+                
+                // Add a very subtle drift to prevent mechanical look
+                // This varies by personality
+                let driftFactor = 0.05; // Default subtle drift
+                
+                if (this.personality.name === "wavy") {
+                    driftFactor = 0.12; // More pronounced for wavy
+                } else if (this.personality.name === "dramatic") {
+                    driftFactor = 0.15; // Most pronounced for dramatic
+                } else if (this.personality.name === "swift") {
+                    driftFactor = 0.08; // Moderate for swift
+                }
+                
+                const drift = Math.sin(normalizedX * Math.PI * this.frequency * 2 + this.phase) * 
+                            this.amplitude * driftFactor;
+                
+                let finalY = this.centerY + yPosition + drift;
+                
+                // Add loop if active
+                if (this.canFormLoops && this.loopState.active) {
+                    // Define the loop region
+                    const loopCenter = this.loopState.position;
+                    const loopWidth = 0.15; // Width of the loop region along the line
+                    
+                    // Distance from the loop center (0-1)
+                    const distFromCenter = Math.abs(normalizedX - loopCenter);
+                    
+                    if (distFromCenter < loopWidth) {
+                        // Inside the loop region
+                        // Calculate loop effect using a smooth bell curve
+                        const loopProgress = 1 - distFromCenter / loopWidth;
+                        const loopStrength = Math.pow(loopProgress, 2) * (3 - 2 * loopProgress); // Smooth bell curve
+                        
+                        // Create a circular/elliptical displacement
+                        const loopPhase = (normalizedX - (loopCenter - loopWidth)) / (loopWidth * 2) * Math.PI * 2;
+                        const loopY = Math.sin(loopPhase) * this.loopState.size * this.loopState.direction;
+                        
+                        // Apply loop displacement with smooth transition
+                        finalY += loopY * loopStrength;
+                    }
+                }
+                
+                return finalY;
+            }
+            
+            // Smooth interpolation function - enhanced for ultra-smooth transitions
+            smoothStep(t) {
+                // Septic (7th degree) smoothstep for super-smooth transitions
+                // This creates smoother acceleration/deceleration at endpoints
+                return t * t * t * t * (t * (t * (t * -20 + 70) - 84) + 35);
+            }
+
+            drawFlowingLine() {
+                // Generate more points for ultra-smooth curves
+                const numPoints = 75; // Increased from 50 for smoother curves
+                const points = [];
+                
+                // Calculate all the points
+                for (let i = 0; i <= numPoints; i++) {
+                    const t = i / numPoints;
+                    let lineX = this.x + t * this.lineLength;
+                    
+                    // Map to normalized position (0-1) across the entire animation space
+                    const normalizedX = (lineX + this.lineLength) / (flowWidth + this.lineLength * 2);
+                    
+                    // Handle X-displacement for loops
+                    if (this.canFormLoops && this.loopState.active) {
+                        // Define the loop region
+                        const loopCenter = this.loopState.position;
+                        const loopWidth = 0.15; // Width of the loop region
+                        
+                        // Distance from the loop center (0-1)
+                        const distFromCenter = Math.abs(normalizedX - loopCenter);
+                        
+                        if (distFromCenter < loopWidth) {
+                            // Inside the loop region
+                            // Calculate loop effect using a smooth bell curve
+                            const loopProgress = 1 - distFromCenter / loopWidth;
+                            const loopStrength = Math.pow(loopProgress, 2) * (3 - 2 * loopProgress); // Smooth bell curve
+                            
+                            // Create a circular x-displacement
+                            const loopPhase = (normalizedX - (loopCenter - loopWidth)) / (loopWidth * 2) * Math.PI * 2;
+                            const loopX = (Math.cos(loopPhase) - 1) * this.loopState.size * 0.5; // X-displacement for loop
+                            
+                            // Apply loop displacement with smooth transition
+                            lineX += loopX * loopStrength;
+                        }
+                    }
+                    
+                    // Get y-position with personality-based variation and possible loop
+                    const lineY = this.getYForX(normalizedX);
+                    
+                    points.push({ x: lineX, y: lineY });
+                }
+                
+                // Build a smooth SVG path using natural spline technique
+                let pathData = `M${points[0].x},${points[0].y}`;
+                
+                // Use a more sophisticated curve calculation for maximum smoothness
+                // Process points in smaller groups for smoother overall curve
+                for (let i = 1; i < points.length - 2; i += 2) {
+                    // Get a window of points for this curve segment
+                    const p0 = i > 1 ? points[i - 2] : points[i - 1];
+                    const p1 = points[i - 1];
+                    const p2 = points[i];
+                    const p3 = points[i + 1]; 
+                    const p4 = i + 2 < points.length ? points[i + 2] : points[i + 1];
+                    
+                    // Generate optimized control points using a 5-point window
+                    const cp1 = this.getEnhancedControlPoint(p0, p1, p2, p3, p4, false);
+                    const cp2 = this.getEnhancedControlPoint(p0, p1, p2, p3, p4, true);
+                    
+                    // Add cubic Bezier curve with enhanced control points
+                    pathData += ` C${cp1.x},${cp1.y} ${cp2.x},${cp2.y} ${p2.x},${p2.y}`;
+                }
+                
+                // Handle remaining points with simple but smooth curves
+                for (let i = Math.floor((points.length - 2) / 2) * 2; i < points.length - 1; i++) {
+                    const p0 = points[i - 1 >= 0 ? i - 1 : i];
+                    const p1 = points[i];
+                    const p2 = points[i + 1];
+                    
+                    // Simple but effective control points for the final segments
+                    const cp1 = {
+                        x: p1.x * 0.75 + p2.x * 0.25,
+                        y: p1.y * 0.75 + p2.y * 0.25
+                    };
+                    const cp2 = {
+                        x: p1.x * 0.25 + p2.x * 0.75,
+                        y: p1.y * 0.25 + p2.y * 0.75
+                    };
+                    
+                    pathData += ` C${cp1.x},${cp1.y} ${cp2.x},${cp2.y} ${p2.x},${p2.y}`;
+                }
+                
+                // Update the path
+                this.element.setAttribute('d', pathData);
+            }
+
+            // Enhanced control point calculation for smoother curves
+            getEnhancedControlPoint(p0, p1, p2, p3, p4, isSecond) {
+                // Calculate tangent vectors using 5-point window
+                // This creates smoother transitions between curve segments
+                let tx, ty;
+                
+                if (isSecond) {
+                    // Second control point - use points p1, p2, p3, p4
+                    tx = (p3.x - p1.x) * 0.5 + (p4.x - p2.x) * 0.1;
+                    ty = (p3.y - p1.y) * 0.5 + (p4.y - p2.y) * 0.1;
+                } else {
+                    // First control point - use points p0, p1, p2, p3
+                    tx = (p2.x - p0.x) * 0.1 + (p3.x - p1.x) * 0.5;
+                    ty = (p2.y - p0.y) * 0.1 + (p3.y - p1.y) * 0.5;
+                }
+                
+                // Scale tangent vector based on distance
+                const distance = Math.sqrt(tx * tx + ty * ty);
+                if (distance > 0) {
+                    // Normalize and scale
+                    const scale = flowConfig.controlPointSpan * (isSecond ? 
+                                (p3.x - p2.x) : (p2.x - p1.x)) * 0.5;
+                    tx = tx / distance * scale;
+                    ty = ty / distance * scale;
+                }
+                
+                // Create control point
+                const controlPoint = {
+                    x: (isSecond ? p2.x : p1.x) + (isSecond ? -tx : tx),
+                    y: (isSecond ? p2.y : p1.y) + (isSecond ? -ty : ty)
+                };
+                
+                // Apply personality-specific smoothing
+                let smoothingFactor = 0.85;
+                if (this.personality.name === "dramatic") {
+                    smoothingFactor = 0.9; // More smoothing for dramatic curves
+                } else if (this.personality.name === "swift") {
+                    smoothingFactor = 0.92; // Extra smoothing for swift
+                }
+                
+                // Smooth the control point position
+                if (isSecond) {
+                    controlPoint.x = p2.x - (p2.x - controlPoint.x) * smoothingFactor;
+                    controlPoint.y = p2.y - (p2.y - controlPoint.y) * smoothingFactor;
+                } else {
+                    controlPoint.x = p1.x + (controlPoint.x - p1.x) * smoothingFactor;
+                    controlPoint.y = p1.y + (controlPoint.y - p1.y) * smoothingFactor;
+                }
+                
+                return controlPoint;
+            }
+        }
+
+        // Initialize the flow animation
+        function initFlowAnimation() {
+            // Initialize the flow section if visible
+            const thoughtsSection = document.querySelector('.thoughts-section');
+            if (!thoughtsSection) return;
+
+            // Check if we're already initialized
+            if (flowCanvas.getAttribute('data-initialized') === 'true') return;
+            flowCanvas.setAttribute('data-initialized', 'true');
+
+            // Create initial set of lines with staggered positions
+            const flowLines = [];
+            for (let i = 0; i < flowConfig.lineCount; i++) {
+                const line = new FlowLine();
+                // Distribute lines across the screen initially
+                const startOffset = (flowWidth + line.lineLength) * (i / flowConfig.lineCount);
+                line.progress = startOffset;
+                line.x = line.progress - line.lineLength;
+                line.drawFlowingLine();
+                flowLines.push(line);
+            }
+
+            // Animation loop
+            let lastTime = 0;
+            function animate(timestamp) {
+                const deltaTime = timestamp - lastTime || 0;
+                lastTime = timestamp;
+                
+                // Update each line
+                for (let line of flowLines) {
+                    line.update(deltaTime);
+                }
+                
+                // Continue animation
+                requestAnimationFrame(animate);
+            }
+
+            // Start animation
+            requestAnimationFrame(animate);
+        }
+
+        // Initialize the animation when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initFlowAnimation();
+        });
+    </script>
+</body>
+</html>

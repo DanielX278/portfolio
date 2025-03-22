@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Humanities Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            padding-top: 100px; /* Added padding to account for fixed header */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Section */
+        .site-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 20px 40px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: transparent;
+        z-index: 1000;
+        pointer-events: none; /* Allow events to pass through the transparent header */
+      }
+      
+      .site-header .logo, .site-header .name-tag {
+    pointer-events: auto;
+}
+        
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+    .site-header {
+        background-color: #f5f5f5;
+        z-index: 25;
+        pointer-events: auto; /* Re-enable for mobile with background */
+    }
+}
+
+        .logo {
+            position: static;
+        }
+
+        .name-tag {
+            font-family: "DM Sans", sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-bottom: 100px;
+            position: relative;
+            max-width: 1020px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .text-container {
+            display: flex;
+            max-width: 900px;
+            width: 55%;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            margin: 50vh 0 0 0; /* Changed from 30% to 50vh to position at half the display height */
+        }
+
+        .main-heading {
+            color: #000;
+            font-family: "DM Sans", sans-serif;
+            font-size: 44px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 100%;
+            letter-spacing: -1.76px;
+        }
+
+        .bio-text {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .bio-copy {
+            color: rgba(0, 0, 0, 0.50);
+            font-family: "EB Garamond", serif;
+            font-size: 42px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 110%;
+            letter-spacing: -0.72px;
+            position: relative;
+        }
+
+        .highlighted {
+            color: #D84242;
+            font-family: "EB Garamond", serif;
+            font-size: 72px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 100%;
+            letter-spacing: -1.28px;
+        }
+
+        .overlay-container {
+            position: fixed;
+            right: 100px;
+            width: auto;
+            height: auto;
+            opacity: 0; /* Start with 0 opacity for transition */
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.3s ease; /* Added transition for smooth appearance */
+            pointer-events: none; /* Prevent overlay from interfering with mouse events */
+        }
+
+        .overlay-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .overlay-content img {
+            max-width: 400px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            margin: 100px 0;
+            position: relative;
+            z-index: 10; /* Added z-index to ensure projects remain clickable under transparent navbar */
+        }
+
+        .tags {
+        display: flex;
+        justify-content: center;
+        gap: 9px;
+        margin-bottom: 40px;
+        text-align: center;
+        width: 1020px; /* Changed from width: 100%, max-width: 1020px to match projects exactly */
+        margin-left: auto;
+        margin-right: auto;
+        }
+
+        .tag {
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.50);
+            text-align: center;
+            font-family: "DM Sans", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            transition: color 0.3s ease;
+        }
+
+        .tag:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .tag-separator {
+            width: 4px;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.50);
+            border-radius: 50%;
+            margin-top: 9px;
+        }
+
+        .tag.research.active, .tag.research:hover {
+            color: #F2C41C;
+        }
+
+        .tag.entrepreneurship.active, .tag.entrepreneurship:hover {
+            color: #3D88E8;
+        }
+
+        .tag.design.active, .tag.design:hover {
+            color: #BF42D8;
+        }
+
+        .projects-container {
+    display: flex;
+    width: 1002px; /* Exact width: 3 items of 330px + 2 gaps of 6px = 1002px */
+    margin: 0 auto;
+    align-items: center;
+    align-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Keep flex-start for grid alignment */
+}
+
+        .project {
+            width: 330px;
+            height: 330px;
+            flex-shrink: 0;
+            aspect-ratio: 1/1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #f5f5f5;
+            z-index: 20; /* Added higher z-index to ensure projects are always clickable */
+        }
+
+        .project img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;
+            position: relative;
+            /* Removed transition for immediate effect */
+        }
+
+        .project:hover img {
+            opacity: 0;
+        }
+
+        .project-shape {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            border: none;
+        }
+
+        .project-info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            z-index: 3;
+            opacity: 0;
+            /* Removed transition for immediate effect */
+        }
+
+        .project:hover .project-info {
+            opacity: 1;
+        }
+
+        .project-title {
+            font-family: "DM Sans", sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: uppercase; /* Make project titles all-caps */
+        }
+
+        .project-description {
+            font-family: "EB Garamond", serif;
+            font-size: 18px;
+        }
+
+        .circle {
+            border-radius: 50%;
+        }
+
+        .circle:hover {
+            border: 4px solid #F2C41C; /* Standardized thickness to 4px */
+        }
+
+        .square:hover {
+            border: 4px solid #3D88E8; /* Standardized thickness to 4px */
+        }
+
+        .octagon {
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        /* Fixed octagon hover styling */
+        .octagon:hover {
+            border: none;
+        }
+
+        .project.octagon .project-info {
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        .octagon-outline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            opacity: 0;
+            /* Removed transition for immediate effect */
+            pointer-events: none;
+        }
+
+        .project.octagon:hover .octagon-outline {
+            opacity: 1;
+        }
+
+        /* Shaping Thoughts Section */
+        .thoughts-section {
+    margin: 0; /* Remove margins, will add padding instead */
+    position: relative;
+    text-align: center;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 100px; /* Account for navbar */
+    box-sizing: border-box; /* Ensure padding is included in height calculation */
+}
+
+        .overthinker-text {
+            color: #000;
+            text-align: center;
+            font-family: "EB Garamond", serif;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-bottom: 0;
+        }
+
+        .thoughts-title {
+            color: #000;
+            text-align: center;
+            font-family: "DM Sans", sans-serif;
+            font-size: 64px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: normal;
+            letter-spacing: -1.92px;
+            position: relative;
+            z-index: 2;
+            margin-top: 0;
+        }
+
+        /* Thank You Section */
+        .thank-you-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: calc(100vh - 200px);
+            padding: 80px 0;
+            text-align: center;
+            position: relative; /* Added for absolute positioning of child */
+        }
+        
+        .thank-you-text {
+            color: #000;
+            text-align: center;
+            font-family: "EB Garamond";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            max-width: 800px;
+            position: relative;
+            top: -40px; /* Move text up by 40px */
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 9px;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .footer-link {
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.50);
+            text-align: center;
+            font-family: "DM Sans", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .footer-link.email:hover {
+            color: #F2C41C; /* Yellow */
+        }
+        
+        .footer-link.linkedin:hover {
+            color: #3D88E8; /* Blue */
+        }
+        
+        .footer-link.onepage:hover, .footer-link.fullcv:hover {
+            color: #BF42D8; /* Purple */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .bio-copy {
+                font-size: 36px;
+            }
+            .highlighted {
+                font-size: 48px;
+            }
+            .projects-container {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bio-copy {
+                font-size: 28px;
+            }
+            .highlighted {
+                font-size: 32px;
+            }
+            .main-heading {
+                font-size: 36px;
+            }
+            .thoughts-title {
+                font-size: 48px;
+            }
+            .projects-container {
+                display: flex;
+                width: calc(100% - 12px);
+                justify-content: space-between;
+                padding: 0 6px;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+            .project {
+                width: calc(50% - 3px);
+                height: auto;
+                aspect-ratio: 1/1;
+                margin-bottom: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header/Navbar -->
+    <header class="site-header">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="26" viewBox="0 0 72 26" fill="none">
+                <ellipse cx="9.52039" cy="9.44219" rx="9.52039" ry="9.44219" transform="matrix(-1 0 0 1 19.0391 3.14453)" fill="#F2C41C"/>
+                <rect width="18.4968" height="18.3448" transform="matrix(-1 0 0 1 43.1406 3.77344)" fill="#3D88E8"/>
+                <path d="M62.7367 3.81225L55.0605 3.80711L49.629 9.18675L49.6238 16.7998L55.048 22.1868L62.7242 22.1919L68.1557 16.8123L68.1609 9.19916L62.7367 3.81225Z" fill="#BF42D8"/>
+            </svg>
+        </div>
+        <div class="name-tag">DANIELE BELFIORE</div>
+    </header>
+    <div class="container">
+        <!-- Main Content with Bio -->
+        <section class="main-content">
+            <div class="text-container">
+                <h1 class="main-heading">I don't know what I'll do</h1>
+                <div class="bio-text">
+                    <p class="bio-copy">
+                        <span class="bio-segment" data-color="#D84242" data-overlay="EPFL">because I'm a digital humanities master student merging ux design and data science for cultural insights</span>, 
+                        <span class="bio-segment" data-color="#4274D8" data-overlay="Economics">with a blended background in economics, management and computer science</span>, 
+                        <span class="bio-segment" data-color="#E61428" data-overlay="Design">who'd love to become an information designer</span>, 
+                        <span class="bio-segment" data-color="#588DCA" data-overlay="Urban">obsessed with long walks and people-watching in crowded cities</span>, 
+                        <span class="bio-segment" data-color="#7758CA" data-overlay="Music">dreaming of my songwriter moment</span>, 
+                        <span class="bio-segment" data-color="#52874F" data-overlay="Easter">who likes to add easter eggs to long copies</span>, 
+                        <span class="bio-segment" data-color="#C28E00" data-overlay="Archives">experienced in turning complex massive historiographical archives into accessible experiences</span>, 
+                        <span class="bio-segment" data-color="#028C32" data-overlay="Research">passionate about human-centered research with real-world applications and high market potential</span>...
+                    </p>
+                </div>
+                <h1 class="main-heading">but I'm having fun.</h1>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay-content"></div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects-section">
+            <div class="tags">
+                <span class="tag research" data-tag="research">RESEARCH</span>
+                <div class="tag-separator"></div>
+                <span class="tag entrepreneurship" data-tag="entrepreneurship">ENTREPRENEURSHIP</span>
+                <div class="tag-separator"></div>
+                <span class="tag design" data-tag="design">DESIGN</span>
+            </div>
+
+            <div class="projects-container">
+                <!-- Project 1: Circle Shape -->
+                <div class="project circle" data-categories="research">
+                    <div class="project-shape circle"></div>
+                    <img src="montreux.jpg" alt="HOP ON THE TRAIN">
+                    <div class="project-info">
+                        <h3 class="project-title">HOP ON THE TRAIN</h3>
+                        <p class="project-description">A digital exhibition conceived for the Montreal Film Festival, synching interconnected stories from the archives of the festival</p>
+                    </div>
+                </div>
+
+                <!-- Project 2: Abstract Water -->
+                <div class="project square" data-categories="design">
+                    <div class="project-shape square"></div>
+                    <img src="cabina.jpg" alt="Abstract Water">
+                    <div class="project-info">
+                        <h3 class="project-title">Water Studies</h3>
+                        <p class="project-description">Visual explorations of movement and light in water</p>
+                    </div>
+                </div>
+
+                <!-- Project 3: Concert -->
+                <div class="project square" data-categories="design entrepreneurship">
+                    <div class="project-shape square"></div>
+                    <img src="catania.jpg" alt="Concert">
+                    <div class="project-info">
+                        <h3 class="project-title">Event Visualization</h3>
+                        <p class="project-description">Creating immersive visual experiences for live performances</p>
+                    </div>
+                </div>
+
+                <!-- Project 4: Painting Palette -->
+                <div class="project octagon" data-categories="design research">
+                    <div class="project-shape octagon"></div>
+                    <img src="catania.jpg" alt="Painting Palette">
+                    <div class="project-info">
+                        <h3 class="project-title">Color Theory Studies</h3>
+                        <p class="project-description">Research-based exploration of color theory in digital environments</p>
+                    </div>
+                    <div class="octagon-outline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 330 330" fill="none">
+                            <path d="M99 0L231 0L330 99L330 231L231 330L99 330L0 231L0 99L99 0Z" stroke="#BF42D8" stroke-width="6" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Project 5: Concert Crowd -->
+                <div class="project octagon" data-categories="entrepreneurship">
+                    <div class="project-shape octagon"></div>
+                    <img src="catania.jpg" alt="Concert Crowd">
+                    <div class="project-info">
+                        <h3 class="project-title">Crowd Dynamics</h3>
+                        <p class="project-description">Analysis of social behavior in crowded event spaces</p>
+                    </div>
+                    <div class="octagon-outline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 330 330" fill="none">
+                            <path d="M99 0L231 0L330 99L330 231L231 330L99 330L0 231L0 99L99 0Z" stroke="#BF42D8" stroke-width="6" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Project 6: Abstract Shape -->
+                <div class="project square" data-categories="design">
+                    <div class="project-shape square"></div>
+                    <img src="montreux.jpg" alt="Abstract Shape">
+                    <div class="project-info">
+                        <h3 class="project-title">Form Studies</h3>
+                        <p class="project-description">Exploration of organic forms and structures</p>
+                    </div>
+                </div>
+
+                <!-- Project 7: Handwriting -->
+                <div class="project circle" data-categories="research">
+                    <div class="project-shape circle"></div>
+                    <img src="cabina.jpg" alt="Handwritten Text">
+                    <div class="project-info">
+                        <h3 class="project-title">Script Analysis</h3>
+                        <p class="project-description">Digitizing and analyzing historical handwritten documents</p>
+                    </div>
+                </div>
+
+                <!-- Project 8: Underwater Scene -->
+                <div class="project octagon" data-categories="research design">
+                    <div class="project-shape octagon"></div>
+                    <img src="montreux.jpg" alt="Underwater Scene">
+                    <div class="project-info">
+                        <h3 class="project-title">Marine Environments</h3>
+                        <p class="project-description">Visual database of underwater ecosystems for conservation research</p>
+                    </div>
+                    <div class="octagon-outline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 330 330" fill="none">
+                            <path d="M99 0L231 0L330 99L330 231L231 330L99 330L0 231L0 99L99 0Z" stroke="#BF42D8" stroke-width="6" fill="none"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shaping Thoughts Section -->
+        <section class="thoughts-section">
+            <p class="overthinker-text">I'm an overthinker</p>
+            <h2 class="thoughts-title">shaping my thoughts</h2>
+        </section>
+
+        <!-- Thank You Section -->
+        <section class="thank-you-section">
+            <p class="thank-you-text">Thanks for scrolling!<br>Hope you found something you like in all that mess.</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <span class="footer-link email">SEND AN EMAIL</span>
+                <div class="tag-separator"></div>
+                <span class="footer-link linkedin">LINKEDIN</span>
+                <div class="tag-separator"></div>
+                <span class="footer-link onepage">ONE-PAGE CV</span>
+                <div class="tag-separator"></div>
+                <span class="footer-link fullcv">FULL CV</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Global SVG scaling factor
+        const svgScaleFactor = 1.0; // Adjust this value to scale all SVGs (1.0 = 100%, 1.5 = 150%, etc.)
+        
+        // Bio Segment Hover Animation
+        const bioSegments = document.querySelectorAll('.bio-segment');
+        const overlayContainer = document.querySelector('.overlay-container');
+        const overlayContent = document.querySelector('.overlay-content');
+
+        // Combined configuration for SVG overlays
+        const svgConfig = {
+            'EPFL': {
+                filename: 'epfl.svg',
+                scale: 0.85,
+                width: 200,
+                height: 100,
+                position: { right: '15%', topOffset: '0%' }
+            },
+            'Economics': {
+                filename: 'bocconi.svg',
+                scale: 0.9,
+                width: 350,
+                height: 150,
+                position: { right: '18%', topOffset: '5%' }
+            },
+            'Design': {
+                filename: 'pentagram.svg',
+                scale: 0.75,
+                width: 250,
+                height: 100,
+                position: { right: '16%', topOffset: '-8%' }
+            },
+            'Urban': {
+                filename: 'melb.svg',
+                scale: 0.85,
+                width: 350,
+                height: 120,
+                position: { right: '20%', topOffset: '4%' }
+            },
+            'Music': {
+                filename: 'falais.svg',
+                scale: 0.8,
+                width: 400,
+                height: 120,
+                position: { right: '14%', topOffset: '-6%' }
+            },
+            'Easter': {
+                filename: 'hehe.svg',
+                scale: 0.7,
+                width: 120,
+                height: 80,
+                position: { right: '17%', topOffset: '7%' }
+            },
+            'Archives': {
+                filename: 'yap.svg',
+                scale: 0.85,
+                width: 380,
+                height: 100,
+                position: { right: '15%', topOffset: '-3%' }
+            },
+            'Research': {
+                filename: 'business.svg',
+                scale: 0.85,
+                width: 350,
+                height: 150,
+                position: { right: '19%', topOffset: '2%' }
+            }
+        };
+
+        bioSegments.forEach(segment => {
+            // Set initial transition
+            segment.style.transition = 'color 0.3s ease';
+            
+            segment.addEventListener('mouseenter', function() {
+                // Get the assigned color
+                const color = this.getAttribute('data-color');
+                
+                // Highlight the text with simple color change
+                this.style.color = color;
+                
+                // Show the overlay with the specific image
+                const overlayType = this.getAttribute('data-overlay');
+                const config = svgConfig[overlayType];
+                
+                // Clear previous content and create image element
+                overlayContent.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = config.filename;
+                img.alt = overlayType;
+                img.width = config.width * config.scale * svgScaleFactor;
+                img.height = config.height * config.scale * svgScaleFactor;
+                overlayContent.appendChild(img);
+                
+                // Apply varied positioning
+                overlayContainer.style.right = config.position.right;
+                overlayContainer.style.display = 'flex';
+                
+                // Position the overlay next to the text with variation
+                const rect = this.getBoundingClientRect();
+                const topOffsetPercent = config.position.topOffset;
+                const topOffset = rect.height * (parseFloat(topOffsetPercent) / 100);
+                overlayContainer.style.top = `${rect.top + topOffset}px`;
+                
+                // Fade in the overlay with animation
+                setTimeout(() => {
+                    overlayContainer.style.opacity = '1';
+                }, 10);
+            });
+
+            segment.addEventListener('mouseleave', function() {
+                // Reset the text color
+                this.style.color = 'rgba(0, 0, 0, 0.5)';
+                
+                // Fade out the overlay
+                overlayContainer.style.opacity = '0';
+                
+                // After fade-out completes, hide the overlay
+                setTimeout(() => {
+                    if (overlayContainer.style.opacity === '0') {
+                        overlayContainer.style.display = 'none';
+                        overlayContent.innerHTML = '';
+                    }
+                }, 300);
+            });
+        });
+
+        // Footer links hover effect
+        const footerLinks = document.querySelectorAll('.footer-link');
+        
+        footerLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Handle link actions here (for future implementation)
+                console.log('Clicked on', this.textContent);
+            });
+        });
+
+        // Project Filtering
+        const tags = document.querySelectorAll('.tag');
+        const projects = document.querySelectorAll('.project');
+        const projectsContainer = document.querySelector('.projects-container');
+        let originalOrder = [];
+        let activeFilter = null;
+
+        // Store the original order of projects
+        projects.forEach(project => {
+            originalOrder.push(project);
+        });
+
+        tags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                const filter = this.getAttribute('data-tag');
+                
+                // If clicking the same tag, reset everything
+                if (this.classList.contains('active')) {
+                    resetProjects();
+                    tags.forEach(t => t.classList.remove('active'));
+                    activeFilter = null;
+                } else {
+                    // Remove active class from all tags
+                    tags.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tag
+                    this.classList.add('active');
+                    activeFilter = filter;
+                    
+                    // Reorder projects based on filter
+                    reorderProjects(filter);
+                }
+            });
+        });
+
+        function resetProjects() {
+            // Reset to original order
+            projectsContainer.innerHTML = '';
+            originalOrder.forEach(project => {
+                project.style.opacity = '1';
+                project.style.filter = 'grayscale(0%)';
+                projectsContainer.appendChild(project);
+            });
+        }
+
+        function reorderProjects(filter) {
+            // Create arrays for the filtered order
+            let matchingProjectsCircle = [];
+            let matchingProjectsSquare = [];
+            let matchingProjectsOctagon = [];
+            let nonMatchingProjects = [];
+            
+            projects.forEach(project => {
+                const categories = project.getAttribute('data-categories').split(' ');
+                
+                if (categories.includes(filter)) {
+                    // Check the shape of the project and sort accordingly
+                    if (project.classList.contains('circle') && filter === 'research') {
+                        matchingProjectsCircle.push(project);
+                    } else if (project.classList.contains('square') && filter === 'entrepreneurship') {
+                        matchingProjectsSquare.push(project);
+                    } else if (project.classList.contains('octagon') && filter === 'design') {
+                        matchingProjectsOctagon.push(project);
+                    } else {
+                        // This is a matching project but not of the primary shape for this filter
+                        if (filter === 'research' && !project.classList.contains('circle')) {
+                            matchingProjectsOctagon.push(project);
+                        } else if (filter === 'entrepreneurship' && !project.classList.contains('square')) {
+                            matchingProjectsCircle.push(project);
+                        } else if (filter === 'design' && !project.classList.contains('octagon')) {
+                            matchingProjectsSquare.push(project);
+                        }
+                    }
+                    project.style.opacity = '1';
+                    project.style.filter = 'grayscale(0%)';
+                } else {
+                    nonMatchingProjects.push(project);
+                    project.style.opacity = '0.3';
+                    project.style.filter = 'grayscale(100%)';
+                }
+            });
+            
+            // Clear container
+            projectsContainer.innerHTML = '';
+            
+            // Add matching projects first by shape, then non-matching
+            if (filter === 'research') {
+                matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
+            } else if (filter === 'entrepreneurship') {
+                matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
+            } else if (filter === 'design') {
+                matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
+                matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
+            }
+            
+            nonMatchingProjects.forEach(project => {
+                projectsContainer.appendChild(project);
+            });
+        }
+
+        // Helper function to get random color
+        function getRandomColor() {
+            const colors = ['#D84242', '#3D88E8', '#F2C41C', '#BF42D8'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // No animations to initialize
+        });
+    </script>
+</body>
+</html>
