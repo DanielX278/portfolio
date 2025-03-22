@@ -10,6 +10,9 @@ const overlayContent = document.querySelector('.overlay-content');
 let activeSegment = null;
 let isHovering = false;
 
+// Track if we're in mobile mode
+let isMobile = window.innerWidth <= 768;
+
 // Track active footer link
 let activeFooterLink = null;
 let footerOverlayContainer = null;
@@ -99,7 +102,7 @@ const footerSvgConfig = {
         width: 120,
         height: 100,
         position: { topOffset: '-200px', horizontalOffset: '-110px' },
-        url: 'assets/one-page-cv.pdf'  // Replace with path to your one-page CV
+        url: 'https://drive.google.com/file/d/1ZF2cMz_XflSYcdTluTY6uqfSRSFKFLBc/view?usp=sharing'  // Replace with path to your one-page CV
     },
     'fullcv': {
         filename: 'fullcv.svg',
@@ -234,7 +237,90 @@ function showOverlay(segment) {
     }, 10);
 }
 
+// Function to show overlay for a segment on mobile
+function showMobileOverlay(segment) {
+    // Reset any previous highlighting
+    resetAllTextColors();
+    
+    // Set as active segment
+    activeSegment = segment;
+    isHovering = true;
+    
+    // Apply color to current segment
+    const color = segment.getAttribute('data-color');
+    segment.style.color = color;
+    
+    // Create and position the overlay
+    const overlayType = segment.getAttribute('data-overlay');
+    const config = svgConfig[overlayType];
+    
+    overlayContent.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = config.filename;
+    img.alt = overlayType;
+    
+    // Adjust image size for mobile header
+    if (window.innerWidth <= 768) {
+        img.width = 120;
+        img.height = 40;
+    } else {
+        img.width = config.width * config.scale * svgScaleFactor;
+        img.height = config.height * config.scale * svgScaleFactor;
+    }
+    
+    overlayContent.appendChild(img);
+    
+    // Mobile-specific positioning
+    if (window.innerWidth <= 768) {
+        overlayContainer.style.right = '0';
+        overlayContainer.style.top = '0';
+        overlayContainer.classList.add('active');
+        document.querySelector('.site-header .name-tag').style.opacity = '0';
+    } else {
+        // Desktop positioning (unchanged)
+        overlayContainer.style.right = config.position.right;
+        
+        const rect = segment.getBoundingClientRect();
+        const topOffsetPercent = config.position.topOffset;
+        const topOffset = rect.height * (parseFloat(topOffsetPercent) / 100);
+        overlayContainer.style.top = `${rect.top + topOffset}px`;
+    }
+    
+    overlayContainer.style.display = 'flex';
+    
+    setTimeout(() => {
+        overlayContainer.style.opacity = '1';
+    }, 10);
+}
+
+// Function to hide bio overlay on mobile
+function hideMobileOverlay() {
+    // Reset active segment text color
+    if (activeSegment) {
+        activeSegment.style.color = 'rgba(0, 0, 0, 0.5)';
+        activeSegment = null;
+    }
+    
+    // Reset all segment text colors as a safeguard
+    resetAllTextColors();
+    
+    // Hide overlay
+    overlayContainer.style.opacity = '0';
+    overlayContainer.classList.remove('active');
+    document.querySelector('.site-header .name-tag').style.opacity = '1';
+    isHovering = false;
+    
+    setTimeout(() => {
+        if (overlayContainer.style.opacity === '0') {
+            overlayContainer.style.display = 'none';
+            overlayContent.innerHTML = '';
+        }
+    }, 300);
+}
+
+
 // Function to show footer overlay
+// Update showFooterOverlay function in main.js
 function showFooterOverlay(link) {
     if (!footerOverlayContainer || !footerOverlayContent) return;
     
@@ -267,11 +353,23 @@ function showFooterOverlay(link) {
     img.height = config.height * config.scale * svgScaleFactor;
     footerOverlayContent.appendChild(img);
     
-    // Position the overlay relative to the hovered link
+    // Position the overlay - different for mobile vs desktop
     const rect = link.getBoundingClientRect();
     
-    footerOverlayContainer.style.top = `${rect.top + parseFloat(config.position.topOffset)}px`;
-    footerOverlayContainer.style.left = `${rect.left + (rect.width/2) + parseFloat(config.position.horizontalOffset)}px`;
+    if (window.innerWidth <= 768) {
+        // Mobile: center horizontally and position above footer
+        footerOverlayContainer.style.left = '50%';
+        footerOverlayContainer.style.transform = 'translateX(-50%)';
+        footerOverlayContainer.style.top = 'auto';
+        footerOverlayContainer.style.bottom = '100px';
+    } else {
+        // Desktop: use original positioning
+        footerOverlayContainer.style.top = `${rect.top + parseFloat(config.position.topOffset)}px`;
+        footerOverlayContainer.style.left = `${rect.left + (rect.width/2) + parseFloat(config.position.horizontalOffset)}px`;
+        footerOverlayContainer.style.transform = 'none';
+        footerOverlayContainer.style.bottom = 'auto';
+    }
+    
     footerOverlayContainer.style.display = 'flex';
     
     // Fade in the overlay with animation
@@ -318,27 +416,42 @@ function checkActiveFooterLink(event) {
     }
 }
 
-// Set up bio segment interactions
+// Update bio segment interactions to use mobile-specific functions on mobile
 function setupBioSegments() {
     bioSegments.forEach(segment => {
         segment.style.transition = 'color 0.3s ease';
         
-        segment.addEventListener('mouseenter', function() {
-            showOverlay(this);
-        });
-
-        segment.addEventListener('mouseleave', function() {
-            // Short delay to avoid flickering when moving between segments
-            setTimeout(() => {
-                if (activeSegment === this && !isMouseOverElement(this)) {
-                    hideOverlay();
+        if (window.innerWidth <= 768) {
+            // For mobile: use click/tap events instead of hover
+            segment.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (activeSegment === this) {
+                    hideMobileOverlay();
+                } else {
+                    showMobileOverlay(this);
                 }
-            }, 50);
-        });
+            });
+        } else {
+            // For desktop: use original hover behavior
+            segment.addEventListener('mouseenter', function() {
+                showOverlay(this);
+            });
+
+            segment.addEventListener('mouseleave', function() {
+                // Short delay to avoid flickering when moving between segments
+                setTimeout(() => {
+                    if (activeSegment === this && !isMouseOverElement(this)) {
+                        hideOverlay();
+                    }
+                }, 50);
+            });
+        }
     });
     
     // Add global listeners for scroll and mouse movement
     window.addEventListener('scroll', function() {
+        if (window.innerWidth <= 768) return; // Skip for mobile
+        
         updateOverlayPosition();
         
         // Safety check - if we're scrolling and not actively hovering, reset everything
@@ -353,6 +466,8 @@ function setupBioSegments() {
     });
     
     document.addEventListener('mousemove', function(e) {
+        if (window.innerWidth <= 768) return; // Skip for mobile
+        
         checkActiveSegment(e);
         checkActiveFooterLink(e);
         
@@ -775,8 +890,33 @@ function setupProjectLinks() {
     });
 }
 
+// Add window resize handler to switch between mobile and desktop behavior
+window.addEventListener('resize', function() {
+    const wasMobile = isMobile;
+    isMobile = window.innerWidth <= 768;
+    
+    // If we crossed the breakpoint, reset everything and reinitialize
+    if (wasMobile !== isMobile) {
+        // Hide any active overlays
+        if (activeSegment) {
+            if (isMobile) {
+                hideMobileOverlay();
+            } else {
+                hideOverlay();
+            }
+        }
+        
+        // Re-initialize components with new behavior
+        setupBioSegments();
+    }
+});
+
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, initializing components...");
+    // Set initial mobile state
+isMobile = window.innerWidth <= 768;
+
     setupBioSegments();
     addFooterLinkStyles();
     setupFooterLinks();

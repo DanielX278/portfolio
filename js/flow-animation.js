@@ -2,7 +2,7 @@
 const flowConfig = {
     colors: ['#BF42D8', '#F2C41C', '#3D88E8'], // Purple, Yellow, Blue
     strokeWidth: 6, // Reduced thickness
-    lineCount: 20, // Fewer lines on screen
+    lineCount: window.innerWidth <= 768 ? 10 : 17, // Fewer lines on screen
     baseSpeed: 240, // Base speed (pixels per second)
     
     // Line personalities - each line will take one of these movement styles
