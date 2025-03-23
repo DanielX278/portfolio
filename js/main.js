@@ -18,10 +18,16 @@ let activeFooterLink = null;
 let footerOverlayContainer = null;
 let footerOverlayContent = null;
 
-// Combined configuration for SVG overlays
+// Add these global variables at the top of the file
+let overlayTimer = null;
+let footerOverlayTimer = null;
+
+
+// Update the svgConfig object to include mobile versions
 const svgConfig = {
     'EPFL': {
         filename: 'epfl.svg',
+        mobileFilename: 'epfl-mobile.svg', // Add mobile versions
         scale: 0.85,
         width: 200,
         height: 100,
@@ -29,6 +35,7 @@ const svgConfig = {
     },
     'Economics': {
         filename: 'bocconi.svg',
+        mobileFilename: 'bocconi-mobile.svg',
         scale: 0.9,
         width: 350,
         height: 150,
@@ -36,6 +43,7 @@ const svgConfig = {
     },
     'Design': {
         filename: 'pentagram.svg',
+        mobileFilename: 'pentagram-mobile.svg',
         scale: 0.75,
         width: 250,
         height: 100,
@@ -43,6 +51,7 @@ const svgConfig = {
     },
     'Urban': {
         filename: 'melb.svg',
+        mobileFilename: 'melb-mobile.svg',
         scale: 0.85,
         width: 350,
         height: 120,
@@ -50,6 +59,7 @@ const svgConfig = {
     },
     'Music': {
         filename: 'falais.svg',
+        mobileFilename: 'falais-mobile.svg',
         scale: 0.8,
         width: 400,
         height: 120,
@@ -57,6 +67,7 @@ const svgConfig = {
     },
     'Easter': {
         filename: 'hehe.svg',
+        mobileFilename: 'hehe-mobile.svg',
         scale: 0.7,
         width: 120,
         height: 80,
@@ -64,6 +75,7 @@ const svgConfig = {
     },
     'Archives': {
         filename: 'yap.svg',
+        mobileFilename: 'yap-mobile.svg', 
         scale: 0.85,
         width: 380,
         height: 100,
@@ -71,6 +83,7 @@ const svgConfig = {
     },
     'Research': {
         filename: 'business.svg',
+        mobileFilename: 'business-mobile.svg',
         scale: 0.85,
         width: 350,
         height: 150,
@@ -78,39 +91,43 @@ const svgConfig = {
     }
 };
 
-// Footer SVG configuration with file references like the bio-copy SVGs
+// Update the footerSvgConfig object similarly
 const footerSvgConfig = {
     'email': {
         filename: 'email.png',
+        mobileFilename: 'email.png',
         scale: 0.4,
         width: 664,
         height: 228,
         position: { topOffset: '-120px', horizontalOffset: '-160px' },
-        url: 'mailto:daniele.belfiore@epfl.ch'  // Replace with your actual email
+        url: 'mailto:daniele.belfiore@epfl.ch'
     },
     'linkedin': {
         filename: 'linkedin.svg',
+        mobileFilename: 'linkedin.svg',
         scale: 2.2,
         width: 120,
         height: 100,
         position: { topOffset: '-200px', horizontalOffset: '-100px' },
-        url: 'https://www.linkedin.com/in/daniele-belfiore/'  // Replace with your actual LinkedIn URL
+        url: 'https://www.linkedin.com/in/daniele-belfiore/'
     },
     'onepage': {
         filename: 'one-page.svg',
+        mobileFilename: 'one-page.svg',
         scale: 3.0,
         width: 120,
         height: 100,
         position: { topOffset: '-200px', horizontalOffset: '-110px' },
-        url: 'https://drive.google.com/file/d/1ZF2cMz_XflSYcdTluTY6uqfSRSFKFLBc/view?usp=sharing'  // Replace with path to your one-page CV
+        url: 'https://drive.google.com/file/d/1ZF2cMz_XflSYcdTluTY6uqfSRSFKFLBc/view?usp=sharing'
     },
     'fullcv': {
         filename: 'fullcv.svg',
+        mobileFilename: 'fullcv.svg',
         scale: 1.7,
         width: 120,
         height: 100,
         position: { topOffset: '-140px', horizontalOffset: '-30px' },
-        url: 'assets/full-cv.pdf'  // Replace with path to your full CV
+        url: 'assets/full-cv.pdf'
     }
 };
 
@@ -237,8 +254,13 @@ function showOverlay(segment) {
     }, 10);
 }
 
-// Function to show overlay for a segment on mobile
+// Modify the showMobileOverlay function
 function showMobileOverlay(segment) {
+    // Clear any existing timers
+    if (overlayTimer) {
+        clearTimeout(overlayTimer);
+    }
+    
     // Reset any previous highlighting
     resetAllTextColors();
     
@@ -256,7 +278,14 @@ function showMobileOverlay(segment) {
     
     overlayContent.innerHTML = '';
     const img = document.createElement('img');
-    img.src = config.filename;
+    
+    // Check if there's a mobile-specific filename
+    if (window.innerWidth <= 768 && config.mobileFilename) {
+        img.src = config.mobileFilename;
+    } else {
+        img.src = config.filename;
+    }
+    
     img.alt = overlayType;
     
     // Adjust image size for mobile header
@@ -291,6 +320,13 @@ function showMobileOverlay(segment) {
     setTimeout(() => {
         overlayContainer.style.opacity = '1';
     }, 10);
+    
+    // Set a timer to hide the overlay after 5 seconds on mobile
+    if (window.innerWidth <= 768) {
+        overlayTimer = setTimeout(() => {
+            hideMobileOverlay();
+        }, 5000);
+    }
 }
 
 // Function to hide bio overlay on mobile
@@ -319,10 +355,14 @@ function hideMobileOverlay() {
 }
 
 
-// Function to show footer overlay
-// Update showFooterOverlay function in main.js
+// Modify the showFooterOverlay function
 function showFooterOverlay(link) {
     if (!footerOverlayContainer || !footerOverlayContent) return;
+    
+    // Clear any existing timers
+    if (footerOverlayTimer) {
+        clearTimeout(footerOverlayTimer);
+    }
     
     // Set as active footer link
     activeFooterLink = link;
@@ -347,7 +387,14 @@ function showFooterOverlay(link) {
     
     // Create image element
     const img = document.createElement('img');
-    img.src = config.filename;
+    
+    // Check if there's a mobile-specific filename
+    if (window.innerWidth <= 768 && config.mobileFilename) {
+        img.src = config.mobileFilename;
+    } else {
+        img.src = config.filename;
+    }
+    
     img.alt = linkType;
     img.width = config.width * config.scale * svgScaleFactor;
     img.height = config.height * config.scale * svgScaleFactor;
@@ -376,7 +423,15 @@ function showFooterOverlay(link) {
     setTimeout(() => {
         footerOverlayContainer.style.opacity = '1';
     }, 10);
+    
+    // Set a timer to hide the footer overlay after 5 seconds
+    if (window.innerWidth <= 768) {
+        footerOverlayTimer = setTimeout(() => {
+            hideFooterOverlay();
+        }, 5000);
+    }
 }
+
 
 // Throttled function to check if mouse is still over active segment
 let isCheckingActiveSegment = false;
@@ -761,6 +816,89 @@ function setupProjectFiltering() {
         });
     }
 
+    // Add this function after setupProjectLinks() or loadProjects()
+function enhanceProjectTouchInteractions() {
+    console.log("Enhancing project touch interactions...");
+    document.querySelectorAll('.project').forEach(project => {
+        // Add touchstart handler to show info immediately on touch
+        project.addEventListener('touchstart', function(e) {
+            // Get the info element and other parts
+            const infoElement = this.querySelector('.project-info');
+            const imgElement = this.querySelector('img');
+            const outlineElement = this.querySelector('.octagon-outline');
+            
+            // Show project info
+            if (infoElement) infoElement.style.opacity = '1';
+            
+            // Hide the image
+            if (imgElement) imgElement.style.opacity = '0';
+            
+            // Show the octagon outline if applicable
+            if (this.classList.contains('octagon') && outlineElement) {
+                outlineElement.style.opacity = '1';
+            }
+            
+            // Add border if applicable
+            if (this.classList.contains('circle')) {
+                this.style.border = '4px solid #F2C41C';
+            } else if (this.classList.contains('square')) {
+                this.style.border = '4px solid #3D88E8';
+            }
+        });
+        
+        // Add touchmove handler to reset if touch moved away
+        project.addEventListener('touchmove', function(e) {
+            // Only reset if touch moved significantly
+            const touch = e.touches[0];
+            const rect = this.getBoundingClientRect();
+            
+            if (touch.clientX < rect.left || touch.clientX > rect.right || 
+                touch.clientY < rect.top || touch.clientY > rect.bottom) {
+                
+                // Reset project display
+                resetProjectDisplay(this);
+            }
+        });
+        
+        // Add touchcancel to reset
+        project.addEventListener('touchcancel', function() {
+            resetProjectDisplay(this);
+        });
+        
+        // Add touchend that doesn't interfere with link clicking
+        project.addEventListener('touchend', function(e) {
+            // Don't do anything on touchend - let the link be followed naturally
+        });
+    });
+    console.log("Touch enhancements complete");
+}
+
+// Add this helper function to reset project display
+function resetProjectDisplay(project) {
+    // Hide project info
+    const infoElement = project.querySelector('.project-info');
+    if (infoElement) {
+        infoElement.style.opacity = '0';
+    }
+    
+    // Show the image
+    const imgElement = project.querySelector('img');
+    if (imgElement) {
+        imgElement.style.opacity = '1';
+    }
+    
+    // Hide the octagon outline if applicable
+    if (project.classList.contains('octagon')) {
+        const outlineElement = project.querySelector('.octagon-outline');
+        if (outlineElement) {
+            outlineElement.style.opacity = '0';
+        }
+    }
+    
+    // Remove border if applicable
+    project.style.border = 'none';
+}
+
     function reorderProjects(filter) {
         // Create arrays for the filtered order
         let matchingProjectsCircle = [];
@@ -911,6 +1049,28 @@ window.addEventListener('resize', function() {
     }
 });
 
+// Add document click handler to close overlays when clicking elsewhere
+document.addEventListener('click', function(e) {
+    // Check if we have an active bio segment overlay
+    if (activeSegment && overlayContainer.style.display === 'flex') {
+        // Check if the click was outside the bio segment and overlay
+        if (!activeSegment.contains(e.target) && !overlayContainer.contains(e.target)) {
+            if (window.innerWidth <= 768) {
+                hideMobileOverlay();
+            } else {
+                hideOverlay();
+            }
+        }
+    }
+    
+    // Check if we have an active footer overlay
+    if (activeFooterLink && footerOverlayContainer && footerOverlayContainer.style.display === 'flex') {
+        // Check if the click was outside the footer link and overlay
+        if (!activeFooterLink.contains(e.target) && !footerOverlayContainer.contains(e.target)) {
+            hideFooterOverlay();
+        }
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, initializing components...");
@@ -923,6 +1083,10 @@ isMobile = window.innerWidth <= 768;
     addLinkStyles(); // Add styles before loading projects
     loadProjects(); // Load projects from JSON
     
-    // Initialize any other components needed for project links
-    setTimeout(setupProjectLinks, 500); // Add slight delay to ensure projects are loaded
+    // Initialize project links and touch behaviors with a slight delay
+    // to ensure projects are loaded
+    setTimeout(function() {
+        setupProjectLinks();
+        enhanceProjectTouchInteractions(); // Add our new function
+    }, 500);
 });

@@ -529,6 +529,7 @@ body {
         justify-content: center;
         margin-left: auto;
         margin-right: auto;
+        margin-top: 40px;
     }
     
     /* Projects layout in column */
@@ -545,6 +546,7 @@ body {
         height: auto;
         aspect-ratio: 1/1;
         margin-bottom: 6px;
+        touch-action: manipulation; /* Improves touch event handling */
     }
     
     /* Footer restructuring */
@@ -568,10 +570,12 @@ body {
     
     /* Overlay positioning for footer */
     .footer-overlay-container {
+        position: fixed;
         left: 50% !important;
         transform: translateX(-50%) !important;
         bottom: 100px !important;
         top: auto !important;
+        z-index: 1010;
     }
     
      /* Text container adjustments */
@@ -606,6 +610,9 @@ body {
         justify-content: center;
         align-items: center;
         z-index: 1001; /* Above header */
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
     
     .overlay-container.active + .site-header .name-tag {
@@ -616,5 +623,9 @@ body {
     .overlay-content img {
         max-height: 40px;
         width: auto;
+    }
+
+    body.overlay-active {
+        overflow: hidden;
     }
 }
