@@ -430,13 +430,28 @@ body {
     top: -40px; /* Move text up by 40px */
 }
 
+/* Footer styles - Desktop */
 .footer-links {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 9px;
     margin-bottom: 20px;
     text-align: center;
     width: 100%;
+    flex-direction: row; /* Ensure it's a row on desktop */
+}
+
+.email-linkedin-group, .cv-group {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+/* Override the default tag-separator margin when used in footer */
+.footer-links .tag-separator {
+    margin-top: 0; /* Remove the top margin */
+    align-self: center; /* Ensure vertical centering */
 }
 
 .footer-link {
@@ -450,6 +465,7 @@ body {
     line-height: normal;
     transition: color 0.3s ease;
 }
+
 
 .footer-link:hover {
     color: rgba(0, 0, 0, 0.8);
@@ -553,6 +569,10 @@ body {
     .footer-links {
         flex-direction: column;
         gap: 15px;
+    }
+
+    .desktop-separator {
+        display: none; /* Hide the separator between groups on mobile */
     }
     
     /* Email and LinkedIn group */

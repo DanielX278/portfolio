@@ -26,16 +26,16 @@ let footerOverlayTimer = null;
 // Update the svgConfig object to include mobile versions
 const svgConfig = {
     'EPFL': {
-        filename: 'epfl.svg',
-        mobileFilename: 'epfl-mobile.svg', // Add mobile versions
+        filename: 'epfl-icon.svg',
+        mobileFilename: 'epfl-icon-mobile.svg', // Add mobile versions
         scale: 0.85,
         width: 200,
         height: 100,
         position: { right: '15%', topOffset: '0%' }
     },
     'Economics': {
-        filename: 'bocconi.svg',
-        mobileFilename: 'bocconi-mobile.svg',
+        filename: 'bocconi-icon.svg',
+        mobileFilename: 'bocconi-icon-mobile.svg',
         scale: 0.9,
         width: 350,
         height: 150,
@@ -67,7 +67,7 @@ const svgConfig = {
     },
     'Easter': {
         filename: 'hehe.svg',
-        mobileFilename: 'hehe-mobile.svg',
+        mobileFilename: 'hehe.svg',
         scale: 0.7,
         width: 120,
         height: 80,
