@@ -31,7 +31,7 @@ const svgConfig = {
         scale: 0.85,
         width: 200,
         height: 100,
-        position: { right: '15%', topOffset: '0%' }
+        position: { left: '45%', topOffset: '0%' }
     },
     'Economics': {
         filename: 'bocconi-icon.svg',
@@ -39,7 +39,7 @@ const svgConfig = {
         scale: 0.9,
         width: 350,
         height: 150,
-        position: { right: '18%', topOffset: '5%' }
+        position: { left: '48%', topOffset: '5%' }
     },
     'Design': {
         filename: 'pentagram.svg',
@@ -47,7 +47,7 @@ const svgConfig = {
         scale: 0.75,
         width: 250,
         height: 100,
-        position: { right: '16%', topOffset: '-8%' }
+        position: { left: '46%', topOffset: '-8%' }
     },
     'Urban': {
         filename: 'melb.svg',
@@ -55,7 +55,7 @@ const svgConfig = {
         scale: 0.85,
         width: 350,
         height: 120,
-        position: { right: '20%', topOffset: '4%' }
+        position: { left: '50%', topOffset: '4%' }
     },
     'Music': {
         filename: 'falais.svg',
@@ -63,7 +63,7 @@ const svgConfig = {
         scale: 0.8,
         width: 400,
         height: 120,
-        position: { right: '14%', topOffset: '-6%' }
+        position: { left: '44%', topOffset: '-6%' }
     },
     'Easter': {
         filename: 'hehe.svg',
@@ -71,7 +71,7 @@ const svgConfig = {
         scale: 0.7,
         width: 120,
         height: 80,
-        position: { right: '17%', topOffset: '7%' }
+        position: { left: '47%', topOffset: '7%' }
     },
     'Archives': {
         filename: 'yap.svg',
@@ -79,7 +79,7 @@ const svgConfig = {
         scale: 0.85,
         width: 380,
         height: 100,
-        position: { right: '15%', topOffset: '-3%' }
+        position: { left: '45%', topOffset: '-3%' }
     },
     'Research': {
         filename: 'business.svg',
@@ -87,7 +87,7 @@ const svgConfig = {
         scale: 0.85,
         width: 350,
         height: 150,
-        position: { right: '19%', topOffset: '2%' }
+        position: { left: '49%', topOffset: '2%' }
     }
 };
 
@@ -241,7 +241,7 @@ function showOverlay(segment) {
     img.height = config.height * config.scale * svgScaleFactor;
     overlayContent.appendChild(img);
     
-    overlayContainer.style.right = config.position.right;
+    overlayContainer.style.left = config.position.left;
     overlayContainer.style.display = 'flex';
     
     const rect = segment.getBoundingClientRect();
