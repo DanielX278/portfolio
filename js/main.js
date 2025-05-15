@@ -911,19 +911,19 @@ function resetProjectDisplay(project) {
             
             if (categories.includes(filter)) {
                 // Check the shape of the project and sort accordingly
-                if (project.classList.contains('circle') && filter === 'heritage') {
+                if (project.classList.contains('circle') && filter === 'design') {
                     matchingProjectsCircle.push(project);
-                } else if (project.classList.contains('square') && filter === 'media') {
+                } else if (project.classList.contains('square') && filter === 'research') {
                     matchingProjectsSquare.push(project);
-                } else if (project.classList.contains('octagon') && filter === 'society') {
+                } else if (project.classList.contains('octagon') && filter === 'product') {
                     matchingProjectsOctagon.push(project);
                 } else {
                     // This is a matching project but not of the primary shape for this filter
-                    if (filter === 'heritage' && !project.classList.contains('circle')) {
+                    if (filter === 'design' && !project.classList.contains('circle')) {
                         matchingProjectsOctagon.push(project);
-                    } else if (filter === 'media' && !project.classList.contains('square')) {
+                    } else if (filter === 'research' && !project.classList.contains('square')) {
                         matchingProjectsCircle.push(project);
-                    } else if (filter === 'society' && !project.classList.contains('octagon')) {
+                    } else if (filter === 'product' && !project.classList.contains('octagon')) {
                         matchingProjectsSquare.push(project);
                     }
                 }
@@ -940,15 +940,15 @@ function resetProjectDisplay(project) {
         projectsContainer.innerHTML = '';
         
         // Add matching projects first by shape, then non-matching
-        if (filter === 'heritage') {
+        if (filter === 'design') {
             matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
             matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
             matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
-        } else if (filter === 'media') {
+        } else if (filter === 'research') {
             matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
             matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
             matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
-        } else if (filter === 'society') {
+        } else if (filter === 'product') {
             matchingProjectsOctagon.forEach(project => projectsContainer.appendChild(project));
             matchingProjectsCircle.forEach(project => projectsContainer.appendChild(project));
             matchingProjectsSquare.forEach(project => projectsContainer.appendChild(project));
