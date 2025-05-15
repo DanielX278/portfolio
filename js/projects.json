@@ -5,7 +5,7 @@
     "description": "Processed archives from Montreux Jazz Memories and designed an interactive exhibition to explore the collection and synthesize new stories.",
     "image": "train_art.png",
     "shape": "octagon",
-    "categories": ["heritage"],
+    "categories": ["design", "research"],
     "link": "https://drive.google.com/file/d/1lA8ywveF1c1e4HLqKUu2jMaHhE07cjAj/view?usp=sharing"
   },
   {
@@ -14,7 +14,7 @@
     "description": "Analyzed over five decades of Billboard Hot 100 lyrics to examine the relationship between popular music and evolving materialistic practices.",
     "image": "materialistic_art.png",
     "shape": "square",
-    "categories": ["media"],
+    "categories": ["research"],
     "link": "https://drive.google.com/file/d/1fhCQOCvnH_UIdZlPSphubptY9VnRTxVq/view"
   },
   {
@@ -23,7 +23,7 @@
     "description": "Created a data pipeline extracting people, locations, and interactions from an 1858 travelogue, mapping the journey to visualize it on a map.",
     "image": "travelogue_art.png",
     "shape": "octagon",
-    "categories": ["heritage"],
+    "categories": ["research"],
     "link": "https://drive.google.com/file/d/1FV82wupGsy9HpNCKk1zK9bXwck8oABvG/view"
   },
   {
@@ -32,7 +32,7 @@
     "description": "Designed an immersive panoramic experience allowing visitors to virtually explore Claude Nobs' chalet in Montreux.",
     "image": "chalet_art.png", 
     "shape": "octagon",
-    "categories": ["heritage"],
+    "categories": ["design"],
     "link": "https://drive.google.com/file/d/1ugC6GmtpfLMyB5MMBQ36B36ZRTWI8cAT/view?usp=sharing"
   },
   {
@@ -41,7 +41,7 @@
     "description": "Designed a gamified service to incentivize and reward reduced energy consumption among students in flatshares.",
     "image": "lume_art.png",
     "shape": "circle",
-    "categories": ["society"],
+    "categories": ["design", "product"],
     "link": "https://www.figma.com/design/6jStjimrTeyW0sIJAMqg3E/2324_G7_Design?node-id=492-3876&p=f&t=WHRVZVICOkdPX3S3-0"
   },
   {
@@ -50,7 +50,7 @@
     "description": "Researched, validated, and designed a platform to streamline the organization and management of festivals and events.",
     "image": "festivize_art.png",
     "shape": "circle",
-    "categories": ["society"],
+    "categories": ["design", "product"],
     "link": "https://drive.google.com/file/d/1Wyz1l-n0XuZ9bjYRzd2BOW3ymQID3hcA/view?usp=sharing"
   },
   {
@@ -59,7 +59,7 @@
     "description": "Leveraging guerrilla marketing practices to value urban heritage and local creative communities in Sicily.",
     "image": "talia_art.png",
     "shape": "circle",
-    "categories": ["society"],
+    "categories": ["product"],
     "link": "https://talia.my/"
   },
   {
@@ -68,7 +68,7 @@
     "description": "I actually have nothing, I'm only optimistic on an idea I just had. Here's someone else's paper I'll use as reference.",
     "image": "illusions_art.png",
     "shape": "square",
-    "categories": ["media"],
+    "categories": ["research"],
     "link": "https://dangeng.github.io/visual_anagrams/"
   }
 ]
