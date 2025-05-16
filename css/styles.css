@@ -485,18 +485,7 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1200px) {
-    .bio-copy {
-        font-size: 36px;
-    }
-    .highlighted {
-        font-size: 48px;
-    }
-    .projects-container {
-        width: 100%;
-        justify-content: center;
-    }
-}
+
 
 @media (max-width: 768px) {
     body {
