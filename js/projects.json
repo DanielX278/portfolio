@@ -64,11 +64,11 @@
   },
   {
     "id": "generative-optical-illusions",
-    "title": "Generative Optical Illusions",
-    "description": "I actually have nothing, I'm only optimistic on an idea I just had. Here's someone else's paper I'll use as reference.",
-    "image": "illusions_art.png",
+    "title": "Maestro",
+    "description": "Designed a rhythmic party game where players alternate between conducting and performing to guess words through musical cues.",
+    "image": "maestro_art.png",
     "shape": "square",
-    "categories": ["research"],
-    "link": "https://dangeng.github.io/visual_anagrams/"
+    "categories": ["design"],
+    "link": "https://docs.google.com/document/d/1S0vaqP_W89FMhLR_lAEsT_bM5vaDr8oSAAqTXiNoi3Y/edit?usp=sharing"
   }
 ]
