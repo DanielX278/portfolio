@@ -22,7 +22,7 @@
     "title": "Spatialising Barclay Johnson's Travelogue",
     "description": "Created a data pipeline extracting people, locations, and interactions from an 1858 travelogue, mapping the journey to visualize it on a map.",
     "image": "travelogue_art.png",
-    "shape": "octagon",
+    "shape": "square",
     "categories": ["research"],
     "link": "https://drive.google.com/file/d/1FV82wupGsy9HpNCKk1zK9bXwck8oABvG/view"
   },
@@ -60,14 +60,14 @@
     "image": "talia_art.png",
     "shape": "circle",
     "categories": ["product"],
-    "link": "https://talia.my/"
+    "link": "https://www.figma.com/slides/M7FwkUj3dK3X21f6kwATF7/Tal%C3%ACa-pitch-ENG--No-costs-?node-id=1-25&t=mwI8TZ0JV95vX0YX-1"
   },
   {
     "id": "generative-optical-illusions",
     "title": "Maestro",
     "description": "Designed a rhythmic party game where players alternate between conducting and performing to guess words through musical cues.",
     "image": "maestro_art.png",
-    "shape": "square",
+    "shape": "circle",
     "categories": ["design"],
     "link": "https://docs.google.com/document/d/1S0vaqP_W89FMhLR_lAEsT_bM5vaDr8oSAAqTXiNoi3Y/edit?usp=sharing"
   }
