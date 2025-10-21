@@ -118,7 +118,7 @@ const footerSvgConfig = {
         width: 120,
         height: 100,
         position: { topOffset: '-200px', horizontalOffset: '-110px' },
-        url: 'https://drive.google.com/file/d/1OVP0UWB3uUI2WuLKzDw5_xCm5Pn5TZEi/view?usp=sharing'
+        url: 'https://drive.google.com/file/d/1NlzVKIxvLALPLXHkxSbJRh-qAgD2dLMw/view?usp=sharing'
     },
     'fullcv': {
         filename: 'fullcv.svg',
